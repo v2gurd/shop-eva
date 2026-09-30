@@ -15,7 +15,7 @@
 :root{
   --bg:#f4f1ec;
   --surface:#fbfaf8;
-  --card:#ffffff;
+  --card:#fff;
   --text:#151311;
   --muted:#817a72;
   --line:rgba(21,19,17,.10);
@@ -47,7 +47,7 @@
 }
 
 html{
-  scroll-behavior:auto;
+  scroll-behavior:smooth;
 }
 
 body{
@@ -55,7 +55,7 @@ body{
   background:var(--bg);
   color:var(--text);
   overflow-x:hidden;
-  transition:background .5s,color .5s;
+  transition:background .4s,color .4s;
 }
 
 body.no-scroll{
@@ -82,7 +82,14 @@ img{
   display:block;
 }
 
-/* ================= PRELOADER ================= */
+::selection{
+  background:var(--gold);
+  color:#fff;
+}
+
+/* =========================================================
+   PRELOADER
+========================================================= */
 
 .preloader{
   position:fixed;
@@ -93,7 +100,11 @@ img{
   display:flex;
   align-items:center;
   justify-content:center;
-  transition:.8s var(--ease);
+  opacity:1;
+  visibility:visible;
+  transition:
+    opacity .65s var(--ease),
+    visibility .65s;
 }
 
 .preloader.done{
@@ -107,13 +118,14 @@ img{
 }
 
 .pre-logo{
-  font-size:64px;
+  font-size:clamp(42px,8vw,64px);
   font-weight:900;
   letter-spacing:13px;
 }
 
 .pre-line{
   width:160px;
+  max-width:60vw;
   height:1px;
   background:rgba(255,255,255,.2);
   margin:22px auto 0;
@@ -126,22 +138,26 @@ img{
   inset:0;
   width:0;
   background:#fff;
-  animation:loadLine 1.6s forwards;
+  animation:loadLine .75s ease forwards;
 }
 
 @keyframes loadLine{
-  to{width:100%}
+  to{
+    width:100%;
+  }
 }
 
-/* ================= CURSOR ================= */
+/* =========================================================
+   CURSOR
+========================================================= */
 
 .cursor-dot,
 .cursor-ring{
   position:fixed;
   pointer-events:none;
   z-index:99998;
-  transform:translate(-50%,-50%);
   border-radius:50%;
+  will-change:transform;
 }
 
 .cursor-dot{
@@ -149,6 +165,7 @@ img{
   height:6px;
   background:#fff;
   mix-blend-mode:difference;
+  transform:translate3d(-100px,-100px,0);
 }
 
 .cursor-ring{
@@ -156,20 +173,22 @@ img{
   height:38px;
   border:1px solid rgba(255,255,255,.7);
   mix-blend-mode:difference;
+  transform:translate3d(-100px,-100px,0);
   transition:
     width .3s var(--ease),
     height .3s var(--ease),
-    background .3s,
-    border .3s;
+    background .3s;
 }
 
 .cursor-ring.big{
-  width:72px;
-  height:72px;
+  width:68px;
+  height:68px;
   background:rgba(255,255,255,.08);
 }
 
-/* ================= HEADER ================= */
+/* =========================================================
+   HEADER
+========================================================= */
 
 .header{
   position:fixed;
@@ -178,7 +197,7 @@ img{
   right:0;
   z-index:5000;
   padding:18px 34px;
-  transition:.5s var(--ease);
+  transition:.45s var(--ease);
 }
 
 .header.scrolled{
@@ -198,6 +217,7 @@ img{
   border-radius:22px;
   background:rgba(20,17,14,.38);
   backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
   color:#fff;
   box-shadow:0 15px 50px rgba(0,0,0,.10);
 }
@@ -296,11 +316,13 @@ img{
   display:none;
 }
 
-/* ================= HERO ================= */
+/* =========================================================
+   HERO
+========================================================= */
 
 .hero{
   height:100svh;
-  min-height:700px;
+  min-height:650px;
   position:relative;
   overflow:hidden;
   background:#17120f;
@@ -310,6 +332,7 @@ img{
 .hero-media{
   position:absolute;
   inset:0;
+  overflow:hidden;
 }
 
 .hero-media img{
@@ -318,20 +341,25 @@ img{
   object-fit:cover;
   object-position:center;
   opacity:.74;
-  transform:scale(1.08);
+  transform:scale(1.04);
+  will-change:transform;
 }
 
 .hero-overlay{
   position:absolute;
   inset:0;
   background:
-    linear-gradient(90deg,
+    linear-gradient(
+      90deg,
       rgba(9,7,5,.88) 0%,
       rgba(9,7,5,.52) 45%,
-      rgba(9,7,5,.15) 100%),
-    linear-gradient(0deg,
+      rgba(9,7,5,.15) 100%
+    ),
+    linear-gradient(
+      0deg,
       rgba(9,7,5,.8),
-      transparent 55%);
+      transparent 55%
+    );
 }
 
 .hero-content{
@@ -403,6 +431,7 @@ img{
   transition:.4s var(--ease);
   position:relative;
   overflow:hidden;
+  will-change:transform;
 }
 
 .btn:before{
@@ -430,7 +459,7 @@ img{
 }
 
 .btn:hover{
-  transform:translateY(-4px);
+  transform:translateY(-3px);
 }
 
 .hero-side{
@@ -461,7 +490,7 @@ img{
 .scroll-line:after{
   content:"";
   position:absolute;
-  top:-100%;
+  top:-60%;
   left:0;
   width:100%;
   height:50%;
@@ -470,8 +499,12 @@ img{
 }
 
 @keyframes scrollLine{
-  0%{top:-60%}
-  100%{top:120%}
+  0%{
+    top:-60%;
+  }
+  100%{
+    top:120%;
+  }
 }
 
 .hero-number{
@@ -484,7 +517,9 @@ img{
   color:rgba(255,255,255,.04);
 }
 
-/* ================= MARQUEE ================= */
+/* =========================================================
+   MARQUEE
+========================================================= */
 
 .marquee{
   background:#17120f;
@@ -497,7 +532,8 @@ img{
 .marquee-track{
   display:flex;
   width:max-content;
-  animation:marquee 25s linear infinite;
+  animation:marquee 28s linear infinite;
+  will-change:transform;
 }
 
 .marquee-item{
@@ -518,10 +554,17 @@ img{
 }
 
 @keyframes marquee{
-  to{transform:translateX(50%)}
+  from{
+    transform:translateX(0);
+  }
+  to{
+    transform:translateX(50%);
+  }
 }
 
-/* ================= SECTIONS ================= */
+/* =========================================================
+   SECTIONS
+========================================================= */
 
 .container{
   max-width:1450px;
@@ -561,7 +604,9 @@ img{
   line-height:2;
 }
 
-/* ================= CATEGORIES ================= */
+/* =========================================================
+   CATEGORIES
+========================================================= */
 
 .categories{
   display:grid;
@@ -576,6 +621,7 @@ img{
   position:relative;
   transform-style:preserve-3d;
   cursor:pointer;
+  will-change:transform;
 }
 
 .category-card:nth-child(2),
@@ -593,7 +639,11 @@ img{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(0deg,rgba(0,0,0,.75),transparent 65%);
+  background:linear-gradient(
+    0deg,
+    rgba(0,0,0,.75),
+    transparent 65%
+  );
 }
 
 .category-card:hover img{
@@ -626,7 +676,9 @@ img{
   margin-top:7px;
 }
 
-/* ================= PRODUCTS ================= */
+/* =========================================================
+   PRODUCTS
+========================================================= */
 
 .shop-tools{
   display:flex;
@@ -680,7 +732,10 @@ img{
   border-radius:25px;
   overflow:hidden;
   position:relative;
-  transition:.5s var(--ease);
+  transition:
+    transform .5s var(--ease),
+    box-shadow .5s var(--ease);
+  animation:productIn .55s var(--ease) both;
 }
 
 .product:hover{
@@ -688,11 +743,23 @@ img{
   box-shadow:var(--shadow);
 }
 
+@keyframes productIn{
+  from{
+    opacity:0;
+    transform:translateY(18px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
 .product-image{
   height:360px;
   background:#e8e1d9;
   position:relative;
   overflow:hidden;
+  cursor:pointer;
 }
 
 .product-image img{
@@ -805,6 +872,7 @@ img{
   font-size:10px;
   display:block;
   margin-bottom:2px;
+  text-decoration:line-through;
 }
 
 .add{
@@ -822,7 +890,9 @@ img{
   transform:rotate(90deg);
 }
 
-/* ================= STORY ================= */
+/* =========================================================
+   STORY
+========================================================= */
 
 .story{
   min-height:700px;
@@ -890,7 +960,9 @@ img{
   font-size:10px;
 }
 
-/* ================= OFFER ================= */
+/* =========================================================
+   OFFER
+========================================================= */
 
 .offer{
   padding:130px 0;
@@ -905,7 +977,11 @@ img{
   align-items:center;
   padding:65px;
   background:
-    linear-gradient(90deg,rgba(18,13,9,.93),rgba(18,13,9,.3)),
+    linear-gradient(
+      90deg,
+      rgba(18,13,9,.93),
+      rgba(18,13,9,.3)
+    ),
     url("https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=1800&q=90")
     center/cover;
   color:#fff;
@@ -961,7 +1037,9 @@ img{
   color:#888;
 }
 
-/* ================= NEWSLETTER ================= */
+/* =========================================================
+   NEWSLETTER
+========================================================= */
 
 .newsletter{
   text-align:center;
@@ -1014,7 +1092,9 @@ img{
   font-weight:700;
 }
 
-/* ================= FOOTER ================= */
+/* =========================================================
+   FOOTER
+========================================================= */
 
 footer{
   background:#15110e;
@@ -1068,7 +1148,9 @@ footer{
   font-size:9px;
 }
 
-/* ================= OVERLAY ================= */
+/* =========================================================
+   OVERLAY
+========================================================= */
 
 .overlay{
   position:fixed;
@@ -1076,6 +1158,7 @@ footer{
   z-index:8000;
   background:rgba(0,0,0,.55);
   backdrop-filter:blur(7px);
+  -webkit-backdrop-filter:blur(7px);
   opacity:0;
   visibility:hidden;
   transition:.4s;
@@ -1086,7 +1169,9 @@ footer{
   visibility:visible;
 }
 
-/* ================= CART ================= */
+/* =========================================================
+   CART
+========================================================= */
 
 .cart{
   position:fixed;
@@ -1098,7 +1183,7 @@ footer{
   color:var(--text);
   z-index:9000;
   transform:translateX(-105%);
-  transition:.65s var(--ease);
+  transition:.6s var(--ease);
   display:flex;
   flex-direction:column;
 }
@@ -1229,7 +1314,9 @@ footer{
   font-weight:800;
 }
 
-/* ================= MODAL ================= */
+/* =========================================================
+   MODAL
+========================================================= */
 
 .modal-wrap{
   position:fixed;
@@ -1255,7 +1342,7 @@ footer{
   background:var(--surface);
   color:var(--text);
   border-radius:30px;
-  transform:scale(.9) translateY(30px);
+  transform:scale(.94) translateY(20px);
   transition:.5s var(--ease);
   position:relative;
 }
@@ -1360,7 +1447,9 @@ footer{
   font-weight:800;
 }
 
-/* ================= TOAST ================= */
+/* =========================================================
+   TOAST
+========================================================= */
 
 .toast{
   position:fixed;
@@ -1382,7 +1471,9 @@ footer{
   opacity:1;
 }
 
-/* ================= RESPONSIVE ================= */
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media(max-width:1100px){
 
@@ -1657,23 +1748,49 @@ footer{
     height:55px;
   }
 }
+
+/* =========================================================
+   REDUCE MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+  *,
+  *::before,
+  *::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+
+}
 </style>
 </head>
 
 <body>
 
-<!-- PRELOADER -->
+<!-- =======================================================
+     PRELOADER
+======================================================= -->
+
 <div class="preloader" id="preloader">
   <div class="preloader-inner">
     <div class="pre-logo">NEGAR</div>
-    <div class="pre-line"><span></span></div>
+    <div class="pre-line">
+      <span></span>
+    </div>
   </div>
 </div>
 
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- HEADER -->
+
+<!-- =======================================================
+     HEADER
+======================================================= -->
+
 <header class="header" id="header">
 
   <nav class="nav">
@@ -1684,34 +1801,56 @@ footer{
     </a>
 
     <div class="nav-links" id="navLinks">
+
       <a href="#home">خانه</a>
       <a href="#collection">کالکشن</a>
       <a href="#products">فروشگاه</a>
       <a href="#story">داستان ما</a>
       <a href="#offers">تخفیف ویژه</a>
+
     </div>
 
     <div class="nav-actions">
 
-      <button class="nav-btn" onclick="searchProducts()" title="جستجو">
+      <button
+        class="nav-btn search-button"
+        onclick="searchProducts()"
+        title="جستجو"
+      >
         ⌕
       </button>
 
-      <button class="nav-btn" onclick="toggleTheme()" title="تم">
+      <button
+        class="nav-btn"
+        onclick="toggleTheme()"
+        title="تغییر تم"
+      >
         ◐
       </button>
 
-      <button class="nav-btn" onclick="showFavorites()" title="علاقه‌مندی">
+      <button
+        class="nav-btn"
+        onclick="showFavorites()"
+        title="علاقه‌مندی"
+      >
         ♡
         <span class="badge" id="favCount">0</span>
       </button>
 
-      <button class="nav-btn" onclick="openCart()" title="سبد">
+      <button
+        class="nav-btn"
+        onclick="openCart()"
+        title="سبد خرید"
+      >
         🛍
         <span class="badge" id="cartCount">0</span>
       </button>
 
-      <button class="nav-btn menu-btn" onclick="toggleMenu()">
+      <button
+        class="nav-btn menu-btn"
+        onclick="toggleMenu()"
+        title="منو"
+      >
         ☰
       </button>
 
@@ -1721,14 +1860,21 @@ footer{
 
 </header>
 
-<!-- HERO -->
+
+<!-- =======================================================
+     HERO
+======================================================= -->
+
 <section class="hero" id="home">
 
   <div class="hero-media">
+
     <img
       src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=2200&q=90"
       alt="NEGAR Leather"
+      fetchpriority="high"
     >
+
   </div>
 
   <div class="hero-overlay"></div>
@@ -1754,11 +1900,17 @@ footer{
 
       <div class="hero-buttons">
 
-        <a href="#products" class="btn btn-dark magnetic">
+        <a
+          href="#products"
+          class="btn btn-dark magnetic"
+        >
           مشاهده کالکشن
         </a>
 
-        <a href="#story" class="btn btn-outline magnetic">
+        <a
+          href="#story"
+          class="btn btn-outline magnetic"
+        >
           داستان NEGAR
         </a>
 
@@ -1769,8 +1921,13 @@ footer{
   </div>
 
   <div class="hero-side">
-    <span>SCROLL TO EXPLORE</span>
+
+    <span>
+      SCROLL TO EXPLORE
+    </span>
+
     <div class="scroll-line"></div>
+
   </div>
 
   <div class="hero-number">
@@ -1779,8 +1936,13 @@ footer{
 
 </section>
 
-<!-- MARQUEE -->
+
+<!-- =======================================================
+     MARQUEE
+======================================================= -->
+
 <div class="marquee">
+
   <div class="marquee-track">
 
     <div class="marquee-item">
@@ -1814,9 +1976,14 @@ footer{
     </div>
 
   </div>
+
 </div>
 
-<!-- COLLECTION -->
+
+<!-- =======================================================
+     COLLECTION
+======================================================= -->
+
 <section class="section" id="collection">
 
   <div class="container">
@@ -1824,8 +1991,15 @@ footer{
     <div class="section-head">
 
       <div>
-        <div class="section-kicker">EXPLORE COLLECTION</div>
-        <h2 class="section-title">برای هر قدم.</h2>
+
+        <div class="section-kicker">
+          EXPLORE COLLECTION
+        </div>
+
+        <h2 class="section-title">
+          برای هر قدم.
+        </h2>
+
       </div>
 
       <p class="section-description">
@@ -1846,15 +2020,27 @@ footer{
         <img
           src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=1300&q=90"
           alt="کفش چرمی زنانه"
+          loading="lazy"
         >
 
         <div class="category-content">
-          <small>01 / WOMEN</small>
-          <h3>زنانه</h3>
-          <span>کالکشن کفش‌های چرمی زنانه ←</span>
+
+          <small>
+            01 / WOMEN
+          </small>
+
+          <h3>
+            زنانه
+          </h3>
+
+          <span>
+            کالکشن کفش‌های چرمی زنانه ←
+          </span>
+
         </div>
 
       </div>
+
 
       <div
         class="category-card tilt"
@@ -1864,15 +2050,27 @@ footer{
         <img
           src="https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=1100&q=90"
           alt="کفش چرمی مردانه"
+          loading="lazy"
         >
 
         <div class="category-content">
-          <small>02 / MEN</small>
-          <h3>مردانه</h3>
-          <span>کالکشن کفش‌های چرمی مردانه ←</span>
+
+          <small>
+            02 / MEN
+          </small>
+
+          <h3>
+            مردانه
+          </h3>
+
+          <span>
+            کالکشن کفش‌های چرمی مردانه ←
+          </span>
+
         </div>
 
       </div>
+
 
       <div
         class="category-card tilt"
@@ -1882,12 +2080,23 @@ footer{
         <img
           src="https://images.unsplash.com/photo-1614252369475-531eba835eb1?auto=format&fit=crop&w=1100&q=90"
           alt="کفش رسمی چرمی"
+          loading="lazy"
         >
 
         <div class="category-content">
-          <small>03 / FORMAL</small>
-          <h3>رسمی</h3>
-          <span>برای موقعیت‌های خاص ←</span>
+
+          <small>
+            03 / FORMAL
+          </small>
+
+          <h3>
+            رسمی
+          </h3>
+
+          <span>
+            برای موقعیت‌های خاص ←
+          </span>
+
         </div>
 
       </div>
@@ -1898,7 +2107,11 @@ footer{
 
 </section>
 
-<!-- PRODUCTS -->
+
+<!-- =======================================================
+     PRODUCTS
+======================================================= -->
+
 <section class="section" id="products">
 
   <div class="container">
@@ -1906,8 +2119,15 @@ footer{
     <div class="section-head">
 
       <div>
-        <div class="section-kicker">NEGAR COLLECTION</div>
-        <h2 class="section-title">انتخاب‌های شما.</h2>
+
+        <div class="section-kicker">
+          NEGAR COLLECTION
+        </div>
+
+        <h2 class="section-title">
+          انتخاب‌های شما.
+        </h2>
+
       </div>
 
       <p class="section-description">
@@ -1916,6 +2136,7 @@ footer{
       </p>
 
     </div>
+
 
     <div class="shop-tools">
 
@@ -1958,30 +2179,60 @@ footer{
 
       </div>
 
-      <select class="sort" id="sort" onchange="sortProducts()">
-        <option value="default">مرتب‌سازی</option>
-        <option value="low">ارزان‌ترین</option>
-        <option value="high">گران‌ترین</option>
-        <option value="new">جدیدترین</option>
+
+      <select
+        class="sort"
+        id="sort"
+        onchange="sortProducts()"
+      >
+
+        <option value="default">
+          مرتب‌سازی
+        </option>
+
+        <option value="low">
+          ارزان‌ترین
+        </option>
+
+        <option value="high">
+          گران‌ترین
+        </option>
+
+        <option value="new">
+          جدیدترین
+        </option>
+
       </select>
 
     </div>
 
-    <div class="product-grid" id="productGrid"></div>
+
+    <div
+      class="product-grid"
+      id="productGrid"
+    ></div>
 
   </div>
 
 </section>
 
-<!-- STORY -->
+
+<!-- =======================================================
+     STORY
+======================================================= -->
+
 <section class="story" id="story">
 
   <div class="story-image">
+
     <img
       src="https://images.unsplash.com/photo-1605733160314-4fc7dac4bb16?auto=format&fit=crop&w=1400&q=90"
       alt="NEGAR Leather Craft"
+      loading="lazy"
     >
+
   </div>
+
 
   <div class="story-content">
 
@@ -2000,21 +2251,45 @@ footer{
       طراحی و راحتی تمرکز کرده‌ایم.
     </p>
 
+
     <div class="story-stats">
 
       <div class="stat">
-        <strong>100%</strong>
-        <span>LEATHER</span>
+
+        <strong>
+          100%
+        </strong>
+
+        <span>
+          LEATHER
+        </span>
+
       </div>
 
-      <div class="stat">
-        <strong>2026</strong>
-        <span>COLLECTION</span>
-      </div>
 
       <div class="stat">
-        <strong>24/7</strong>
-        <span>SUPPORT</span>
+
+        <strong>
+          2026
+        </strong>
+
+        <span>
+          COLLECTION
+        </span>
+
+      </div>
+
+
+      <div class="stat">
+
+        <strong>
+          24/7
+        </strong>
+
+        <span>
+          SUPPORT
+        </span>
+
       </div>
 
     </div>
@@ -2023,7 +2298,11 @@ footer{
 
 </section>
 
-<!-- OFFER -->
+
+<!-- =======================================================
+     OFFER
+======================================================= -->
+
 <section class="offer" id="offers">
 
   <div class="container">
@@ -2032,48 +2311,80 @@ footer{
 
       <div class="offer-content">
 
-        <small>LIMITED LEATHER SALE</small>
+        <small>
+          LIMITED LEATHER SALE
+        </small>
 
-        <h2>تا ۳۰٪ تخفیف</h2>
+        <h2>
+          تا ۳۰٪ تخفیف
+        </h2>
 
         <p>
           بعضی مدل‌های منتخب کالکشن برای مدت محدود
           با قیمت ویژه ارائه می‌شوند.
         </p>
 
+
         <div class="timer">
 
           <div class="time-box">
             <div>
-              <strong id="days">02</strong>
-              <span>روز</span>
+              <strong id="days">
+                02
+              </strong>
+
+              <span>
+                روز
+              </span>
             </div>
           </div>
 
-          <div class="time-box">
-            <div>
-              <strong id="hours">12</strong>
-              <span>ساعت</span>
-            </div>
-          </div>
 
           <div class="time-box">
             <div>
-              <strong id="minutes">30</strong>
-              <span>دقیقه</span>
+              <strong id="hours">
+                12
+              </strong>
+
+              <span>
+                ساعت
+              </span>
             </div>
           </div>
 
+
           <div class="time-box">
             <div>
-              <strong id="seconds">00</strong>
-              <span>ثانیه</span>
+              <strong id="minutes">
+                30
+              </strong>
+
+              <span>
+                دقیقه
+              </span>
+            </div>
+          </div>
+
+
+          <div class="time-box">
+            <div>
+              <strong id="seconds">
+                00
+              </strong>
+
+              <span>
+                ثانیه
+              </span>
             </div>
           </div>
 
         </div>
 
-        <a href="#products" class="btn btn-dark">
+
+        <a
+          href="#products"
+          class="btn btn-dark"
+        >
           مشاهده تخفیف‌ها
         </a>
 
@@ -2085,7 +2396,11 @@ footer{
 
 </section>
 
-<!-- NEWSLETTER -->
+
+<!-- =======================================================
+     NEWSLETTER
+======================================================= -->
+
 <section class="newsletter">
 
   <div class="newsletter-box">
@@ -2094,11 +2409,14 @@ footer{
       STAY IN TOUCH
     </div>
 
-    <h2>همراه NEGAR باش.</h2>
+    <h2>
+      همراه NEGAR باش.
+    </h2>
 
     <p>
       جدیدترین مدل‌ها و تخفیف‌ها را زودتر از بقیه ببین.
     </p>
+
 
     <form
       class="news-form"
@@ -2122,7 +2440,11 @@ footer{
 
 </section>
 
-<!-- FOOTER -->
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
+
 <footer>
 
   <div class="footer">
@@ -2132,8 +2454,13 @@ footer{
       <div class="footer-brand">
 
         <div class="logo">
+
           NEGAR
-          <small>LEATHER HOUSE</small>
+
+          <small>
+            LEATHER HOUSE
+          </small>
+
         </div>
 
         <p>
@@ -2143,40 +2470,92 @@ footer{
 
       </div>
 
+
       <div>
 
-        <h4>فروشگاه</h4>
+        <h4>
+          فروشگاه
+        </h4>
 
-        <a href="#products">همه محصولات</a>
-        <a href="#products" onclick="filterProducts('زنانه')">زنانه</a>
-        <a href="#products" onclick="filterProducts('مردانه')">مردانه</a>
-        <a href="#products" onclick="filterProducts('رسمی')">رسمی</a>
+        <a href="#products">
+          همه محصولات
+        </a>
+
+        <a
+          href="#products"
+          onclick="filterProducts('زنانه')"
+        >
+          زنانه
+        </a>
+
+        <a
+          href="#products"
+          onclick="filterProducts('مردانه')"
+        >
+          مردانه
+        </a>
+
+        <a
+          href="#products"
+          onclick="filterProducts('رسمی')"
+        >
+          رسمی
+        </a>
 
       </div>
 
+
       <div>
 
-        <h4>راهنما</h4>
+        <h4>
+          راهنما
+        </h4>
 
-        <a href="#">راهنمای سایز</a>
-        <a href="#">شرایط ارسال</a>
-        <a href="#">تعویض کالا</a>
-        <a href="#">سؤالات متداول</a>
+        <a href="#">
+          راهنمای سایز
+        </a>
+
+        <a href="#">
+          شرایط ارسال
+        </a>
+
+        <a href="#">
+          تعویض کالا
+        </a>
+
+        <a href="#">
+          سؤالات متداول
+        </a>
 
       </div>
 
+
       <div>
 
-        <h4>ارتباط</h4>
+        <h4>
+          ارتباط
+        </h4>
 
-        <a href="#">Instagram</a>
-        <a href="#">Telegram</a>
-        <a href="#">WhatsApp</a>
-        <a href="#">Contact</a>
+        <a href="#">
+          Instagram
+        </a>
+
+        <a href="#">
+          Telegram
+        </a>
+
+        <a href="#">
+          WhatsApp
+        </a>
+
+        <a href="#">
+          Contact
+        </a>
 
       </div>
 
     </div>
+
 
     <div class="footer-bottom">
 
@@ -2194,19 +2573,32 @@ footer{
 
 </footer>
 
-<!-- OVERLAY -->
+
+<!-- =======================================================
+     OVERLAY
+======================================================= -->
+
 <div
   class="overlay"
   id="overlay"
   onclick="closeEverything()"
 ></div>
 
-<!-- CART -->
-<aside class="cart" id="cart">
+
+<!-- =======================================================
+     CART
+======================================================= -->
+
+<aside
+  class="cart"
+  id="cart"
+>
 
   <div class="cart-head">
 
-    <h3>سبد خرید</h3>
+    <h3>
+      سبد خرید
+    </h3>
 
     <button
       class="close"
@@ -2217,14 +2609,27 @@ footer{
 
   </div>
 
-  <div class="cart-items" id="cartItems"></div>
+
+  <div
+    class="cart-items"
+    id="cartItems"
+  ></div>
+
 
   <div class="cart-footer">
 
     <div class="total">
-      <span>مجموع</span>
-      <span id="totalPrice">۰ تومان</span>
+
+      <span>
+        مجموع
+      </span>
+
+      <span id="totalPrice">
+        ۰ تومان
+      </span>
+
     </div>
+
 
     <button
       class="checkout"
@@ -2237,8 +2642,15 @@ footer{
 
 </aside>
 
-<!-- MODAL -->
-<div class="modal-wrap" id="modal">
+
+<!-- =======================================================
+     PRODUCT MODAL
+======================================================= -->
+
+<div
+  class="modal-wrap"
+  id="modal"
+>
 
   <div class="modal">
 
@@ -2249,11 +2661,19 @@ footer{
       ×
     </button>
 
+
     <div class="modal-grid">
 
       <div class="modal-image">
-        <img id="modalImg" src="" alt="">
+
+        <img
+          id="modalImg"
+          src=""
+          alt=""
+        >
+
       </div>
+
 
       <div class="modal-info">
 
@@ -2268,24 +2688,86 @@ footer{
           id="modalPrice"
         ></div>
 
+
         <div class="size-title">
           انتخاب سایز
         </div>
 
+
         <div class="sizes">
 
-          <button class="size" onclick="chooseSize(this)">۳۶</button>
-          <button class="size" onclick="chooseSize(this)">۳۷</button>
-          <button class="size" onclick="chooseSize(this)">۳۸</button>
-          <button class="size" onclick="chooseSize(this)">۳۹</button>
-          <button class="size" onclick="chooseSize(this)">۴۰</button>
-          <button class="size" onclick="chooseSize(this)">۴۱</button>
-          <button class="size" onclick="chooseSize(this)">۴۲</button>
-          <button class="size" onclick="chooseSize(this)">۴۳</button>
-          <button class="size" onclick="chooseSize(this)">۴۴</button>
-          <button class="size" onclick="chooseSize(this)">۴۵</button>
+          <button
+            class="size"
+            onclick="chooseSize(this)"
+          >
+            ۳۶
+          </button>
+
+          <button
+            class="size"
+            onclick="chooseSize(this)"
+          >
+            ۳۷
+          </button>
+
+          <button
+            class="size"
+            onclick="chooseSize(this)"
+          >
+            ۳۸
+          </button>
+
+          <button
+            class="size"
+            onclick="chooseSize(this)"
+          >
+            ۳۹
+          </button>
+
+          <button
+            class="size"
+            onclick="chooseSize(this)"
+          >
+            ۴۰
+          </button>
+
+          <button
+            class="size"
+            onclick="chooseSize(this)"
+          >
+            ۴۱
+          </button>
+
+          <button
+            class="size"
+            onclick="chooseSize(this)"
+          >
+            ۴۲
+          </button>
+
+          <button
+            class="size"
+            onclick="chooseSize(this)"
+          >
+            ۴۳
+          </button>
+
+          <button
+            class="size"
+            onclick="chooseSize(this)"
+          >
+            ۴۴
+          </button>
+
+          <button
+            class="size"
+            onclick="chooseSize(this)"
+          >
+            ۴۵
+          </button>
 
         </div>
+
 
         <button
           class="modal-add"
@@ -2302,14 +2784,20 @@ footer{
 
 </div>
 
-<div class="toast" id="toast"></div>
 
-<!-- GSAP -->
+<div
+  class="toast"
+  id="toast"
+></div>
+
+
+<!-- =======================================================
+     GSAP
+======================================================= -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-<!-- LENIS -->
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script>
 
 <script>
 
@@ -2317,7 +2805,7 @@ footer{
    PRODUCT DATABASE
 ========================================================= */
 
-const products = [
+const products=[
 
 {
  id:1,
@@ -2489,6 +2977,7 @@ const products = [
 
 ];
 
+
 /* =========================================================
    STATE
 ========================================================= */
@@ -2496,24 +2985,28 @@ const products = [
 let currentProducts=[...products];
 
 let cart=JSON.parse(
- localStorage.getItem("negar_cart") || "[]"
+  localStorage.getItem("negar_cart") || "[]"
 );
 
 let favorites=JSON.parse(
- localStorage.getItem("negar_favorites") || "[]"
+  localStorage.getItem("negar_favorites") || "[]"
 );
 
 let selectedProduct=null;
-
 let selectedSize=null;
 
+
 /* =========================================================
-   FORMAT
+   PRICE
 ========================================================= */
 
 function price(value){
- return new Intl.NumberFormat("fa-IR").format(value)+" تومان";
+
+  return new Intl.NumberFormat("fa-IR")
+    .format(value)+" تومان";
+
 }
+
 
 /* =========================================================
    RENDER PRODUCTS
@@ -2521,116 +3014,128 @@ function price(value){
 
 function renderProducts(){
 
- const grid=document.getElementById("productGrid");
+  const grid=document.getElementById("productGrid");
 
- if(!currentProducts.length){
+  if(!currentProducts.length){
 
-   grid.innerHTML=`
-   <div style="
-    grid-column:1/-1;
-    text-align:center;
-    padding:100px 20px;
-    color:var(--muted);
-   ">
-    محصولی با این مشخصات پیدا نشد.
-   </div>`;
+    grid.innerHTML=`
+      <div style="
+        grid-column:1/-1;
+        text-align:center;
+        padding:100px 20px;
+        color:var(--muted);
+      ">
+        محصولی با این مشخصات پیدا نشد.
+      </div>
+    `;
 
-   return;
- }
+    return;
 
- grid.innerHTML=currentProducts.map(p=>{
+  }
 
-   const fav=favorites.includes(p.id);
 
-   return`
+  grid.innerHTML=currentProducts.map((p,index)=>{
 
-   <article class="product reveal">
+    const fav=favorites.includes(p.id);
 
-     <div
-       class="product-image"
-       onclick="openProduct(${p.id})"
-     >
+    return`
 
-       <span class="product-badge">
-         ${p.badge}
-       </span>
+      <article
+        class="product"
+        style="animation-delay:${Math.min(index*.045,.35)}s"
+      >
 
-       <button
-         class="wish ${fav?"active":""}"
-         onclick="toggleFavorite(event,${p.id})"
-       >
-         ${fav?"♥":"♡"}
-       </button>
+        <div
+          class="product-image"
+          onclick="openProduct(${p.id})"
+        >
 
-       <img
-         src="${p.image}"
-         alt="${p.name}"
-         loading="lazy"
-       >
+          <span class="product-badge">
+            ${p.badge}
+          </span>
 
-       <button
-         class="quick-view"
-         onclick="openProduct(${p.id})"
-       >
-         مشاهده سریع
-       </button>
+          <button
+            class="wish ${fav?"active":""}"
+            onclick="toggleFavorite(event,${p.id})"
+          >
+            ${fav?"♥":"♡"}
+          </button>
 
-     </div>
+          <img
+            src="${p.image}"
+            alt="${p.name}"
+            loading="lazy"
+          >
 
-     <div class="product-info">
+          <button
+            class="quick-view"
+            onclick="openProduct(${p.id})"
+          >
+            مشاهده سریع
+          </button>
 
-       <div class="product-meta">
+        </div>
 
-         <span>
-           ${p.category} / ${p.type}
-         </span>
 
-         <span class="leather">
-           ● چرم طبیعی
-         </span>
+        <div class="product-info">
 
-       </div>
+          <div class="product-meta">
 
-       <div class="product-name">
-         ${p.name}
-       </div>
+            <span>
+              ${p.category} / ${p.type}
+            </span>
 
-       <div class="rating">
-         ★ ${p.rating}
-       </div>
+            <span class="leather">
+              ● چرم طبیعی
+            </span>
 
-       <div class="price-row">
+          </div>
 
-         <div>
 
-           <span class="old-price">
-             ${price(p.oldPrice)}
-           </span>
+          <div class="product-name">
+            ${p.name}
+          </div>
 
-           <div class="price">
-             ${price(p.price)}
-           </div>
 
-         </div>
+          <div class="rating">
+            ★ ${p.rating}
+          </div>
 
-         <button
-           class="add magnetic"
-           onclick="quickAdd(${p.id})"
-         >
-           +
-         </button>
 
-       </div>
+          <div class="price-row">
 
-     </div>
+            <div>
 
-   </article>
+              <span class="old-price">
+                ${price(p.oldPrice)}
+              </span>
 
-   `;
+              <div class="price">
+                ${price(p.price)}
+              </div>
 
- }).join("");
+            </div>
+
+
+            <button
+              class="add magnetic"
+              onclick="quickAdd(${p.id})"
+            >
+              +
+            </button>
+
+          </div>
+
+        </div>
+
+      </article>
+
+    `;
+
+  }).join("");
 
 }
+
 
 /* =========================================================
    FILTER
@@ -2638,29 +3143,42 @@ function renderProducts(){
 
 function filterProducts(filter){
 
- document.querySelectorAll(".filter").forEach(btn=>{
-   btn.classList.toggle(
-     "active",
-     btn.textContent.trim()===filter
-   );
- });
+  document.querySelectorAll(".filter").forEach(btn=>{
 
- if(filter==="همه"){
-   currentProducts=[...products];
- }else{
-   currentProducts=products.filter(p=>
-     p.category===filter ||
-     p.type===filter
-   );
- }
+    btn.classList.toggle(
+      "active",
+      btn.textContent.trim()===filter
+    );
 
- document
-   .getElementById("products")
-   .scrollIntoView({behavior:"smooth"});
+  });
 
- renderProducts();
+
+  if(filter==="همه"){
+
+    currentProducts=[...products];
+
+  }else{
+
+    currentProducts=products.filter(p=>
+      p.category===filter ||
+      p.type===filter
+    );
+
+  }
+
+
+  renderProducts();
+
+
+  document
+    .getElementById("products")
+    .scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
 
 }
+
 
 /* =========================================================
    SORT
@@ -2668,27 +3186,47 @@ function filterProducts(filter){
 
 function sortProducts(){
 
- const value=document.getElementById("sort").value;
+  const value=
+    document.getElementById("sort").value;
 
- if(value==="low"){
-   currentProducts.sort((a,b)=>a.price-b.price);
- }
 
- else if(value==="high"){
-   currentProducts.sort((a,b)=>b.price-a.price);
- }
+  if(value==="low"){
 
- else if(value==="new"){
-   currentProducts.sort((a,b)=>b.id-a.id);
- }
+    currentProducts.sort(
+      (a,b)=>a.price-b.price
+    );
 
- else{
-   currentProducts.sort((a,b)=>a.id-b.id);
- }
+  }
 
- renderProducts();
+  else if(value==="high"){
+
+    currentProducts.sort(
+      (a,b)=>b.price-a.price
+    );
+
+  }
+
+  else if(value==="new"){
+
+    currentProducts.sort(
+      (a,b)=>b.id-a.id
+    );
+
+  }
+
+  else{
+
+    currentProducts.sort(
+      (a,b)=>a.id-b.id
+    );
+
+  }
+
+
+  renderProducts();
 
 }
+
 
 /* =========================================================
    SEARCH
@@ -2696,28 +3234,52 @@ function sortProducts(){
 
 function searchProducts(){
 
- const query=prompt("نام کفش، دسته‌بندی یا نوع محصول را وارد کنید:");
+  const query=prompt(
+    "نام کفش، دسته‌بندی یا نوع محصول را وارد کنید:"
+  );
 
- if(!query)return;
+  if(!query)return;
 
- currentProducts=products.filter(p=>
-   p.name.toLowerCase().includes(query.toLowerCase()) ||
-   p.category.includes(query) ||
-   p.type.includes(query) ||
-   p.material.includes(query)
- );
 
- document
-   .getElementById("products")
-   .scrollIntoView({behavior:"smooth"});
+  currentProducts=products.filter(p=>
 
- renderProducts();
+    p.name
+      .toLowerCase()
+      .includes(query.toLowerCase())
 
- if(!currentProducts.length){
-   toast("محصول موردنظر پیدا نشد.");
- }
+    ||
+
+    p.category.includes(query)
+
+    ||
+
+    p.type.includes(query)
+
+    ||
+
+    p.material.includes(query)
+
+  );
+
+
+  renderProducts();
+
+
+  document
+    .getElementById("products")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
+
+  if(!currentProducts.length){
+
+    toast("محصول موردنظر پیدا نشد.");
+
+  }
 
 }
+
 
 /* =========================================================
    FAVORITES
@@ -2725,54 +3287,81 @@ function searchProducts(){
 
 function toggleFavorite(e,id){
 
- e.stopPropagation();
+  e.stopPropagation();
 
- if(favorites.includes(id)){
-   favorites=favorites.filter(x=>x!==id);
-   toast("از علاقه‌مندی‌ها حذف شد.");
- }else{
-   favorites.push(id);
-   toast("به علاقه‌مندی‌ها اضافه شد.");
- }
 
- localStorage.setItem(
-   "negar_favorites",
-   JSON.stringify(favorites)
- );
+  if(favorites.includes(id)){
 
- updateCounts();
- renderProducts();
+    favorites=favorites.filter(
+      x=>x!==id
+    );
+
+    toast("از علاقه‌مندی‌ها حذف شد.");
+
+  }else{
+
+    favorites.push(id);
+
+    toast("به علاقه‌مندی‌ها اضافه شد.");
+
+  }
+
+
+  localStorage.setItem(
+    "negar_favorites",
+    JSON.stringify(favorites)
+  );
+
+
+  updateCounts();
+  renderProducts();
 
 }
+
 
 function showFavorites(){
 
- if(!favorites.length){
-   toast("هنوز محصولی ذخیره نکرده‌اید.");
-   return;
- }
+  if(!favorites.length){
 
- currentProducts=products.filter(
-   p=>favorites.includes(p.id)
- );
+    toast("هنوز محصولی ذخیره نکرده‌اید.");
 
- document
-   .getElementById("products")
-   .scrollIntoView({behavior:"smooth"});
+    return;
 
- renderProducts();
+  }
+
+
+  currentProducts=products.filter(
+    p=>favorites.includes(p.id)
+  );
+
+
+  renderProducts();
+
+
+  document
+    .getElementById("products")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
 
 }
+
 
 function updateCounts(){
 
- document.getElementById("favCount").textContent=
-   favorites.length;
+  document.getElementById("favCount")
+    .textContent=favorites.length;
 
- document.getElementById("cartCount").textContent=
-   cart.reduce((a,b)=>a+b.qty,0);
+
+  document.getElementById("cartCount")
+    .textContent=
+      cart.reduce(
+        (total,item)=>total+item.qty,
+        0
+      );
 
 }
+
 
 /* =========================================================
    PRODUCT MODAL
@@ -2780,79 +3369,119 @@ function updateCounts(){
 
 function openProduct(id){
 
- const p=products.find(x=>x.id===id);
+  const p=products.find(
+    x=>x.id===id
+  );
 
- if(!p)return;
+  if(!p)return;
 
- selectedProduct=p;
- selectedSize=null;
 
- document.querySelectorAll(".size")
- .forEach(x=>x.classList.remove("active"));
+  selectedProduct=p;
+  selectedSize=null;
 
- document.getElementById("modalImg").src=p.image;
 
- document.getElementById("modalCat").textContent=
-   `${p.category} / ${p.type} / ${p.material}`;
+  document
+    .querySelectorAll(".size")
+    .forEach(x=>
+      x.classList.remove("active")
+    );
 
- document.getElementById("modalName").textContent=p.name;
 
- document.getElementById("modalDesc").textContent=p.desc;
+  document.getElementById("modalImg").src=p.image;
 
- document.getElementById("modalPrice").textContent=
-   price(p.price);
+  document.getElementById("modalCat")
+    .textContent=
+      `${p.category} / ${p.type} / ${p.material}`;
 
- document.getElementById("modal").classList.add("active");
+  document.getElementById("modalName")
+    .textContent=p.name;
 
- document.getElementById("overlay").classList.add("active");
+  document.getElementById("modalDesc")
+    .textContent=p.desc;
 
- document.body.classList.add("no-scroll");
+  document.getElementById("modalPrice")
+    .textContent=price(p.price);
+
+
+  document
+    .getElementById("modal")
+    .classList.add("active");
+
+
+  document
+    .getElementById("overlay")
+    .classList.add("active");
+
+
+  document.body.classList.add("no-scroll");
 
 }
+
 
 function closeModal(){
 
- document.getElementById("modal")
- .classList.remove("active");
+  document
+    .getElementById("modal")
+    .classList.remove("active");
 
- if(
-   !document.getElementById("cart")
-   .classList.contains("active")
- ){
-   document.getElementById("overlay")
-   .classList.remove("active");
 
-   document.body.classList.remove("no-scroll");
- }
+  if(
+    !document
+      .getElementById("cart")
+      .classList.contains("active")
+  ){
+
+    document
+      .getElementById("overlay")
+      .classList.remove("active");
+
+    document.body.classList.remove("no-scroll");
+
+  }
 
 }
+
 
 function chooseSize(btn){
 
- document.querySelectorAll(".size")
- .forEach(x=>x.classList.remove("active"));
+  document
+    .querySelectorAll(".size")
+    .forEach(x=>
+      x.classList.remove("active")
+    );
 
- btn.classList.add("active");
 
- selectedSize=btn.textContent;
+  btn.classList.add("active");
+
+  selectedSize=btn.textContent;
 
 }
+
 
 function addModalProduct(){
 
- if(!selectedSize){
-   toast("ابتدا سایز را انتخاب کنید.");
-   return;
- }
+  if(!selectedProduct)return;
 
- addToCart(
-   selectedProduct.id,
-   selectedSize
- );
 
- closeModal();
+  if(!selectedSize){
+
+    toast("ابتدا سایز را انتخاب کنید.");
+
+    return;
+
+  }
+
+
+  addToCart(
+    selectedProduct.id,
+    selectedSize
+  );
+
+
+  closeModal();
 
 }
+
 
 /* =========================================================
    CART
@@ -2860,193 +3489,281 @@ function addModalProduct(){
 
 function quickAdd(id){
 
- addToCart(id,"۴۲");
+  addToCart(id,"۴۲");
 
 }
+
 
 function addToCart(id,size){
 
- const exists=cart.find(
-   x=>x.id===id && x.size===size
- );
+  const exists=cart.find(
+    x=>x.id===id && x.size===size
+  );
 
- if(exists){
-   exists.qty++;
- }else{
-   cart.push({
-     id,
-     size,
-     qty:1
-   });
- }
 
- saveCart();
+  if(exists){
 
- toast("کفش به سبد خرید اضافه شد.");
+    exists.qty++;
+
+  }else{
+
+    cart.push({
+      id:id,
+      size:size,
+      qty:1
+    });
+
+  }
+
+
+  saveCart();
+
+  toast("کفش به سبد خرید اضافه شد.");
 
 }
+
 
 function saveCart(){
 
- localStorage.setItem(
-   "negar_cart",
-   JSON.stringify(cart)
- );
+  localStorage.setItem(
+    "negar_cart",
+    JSON.stringify(cart)
+  );
 
- renderCart();
 
- updateCounts();
+  renderCart();
+  updateCounts();
 
 }
+
 
 function renderCart(){
 
- const box=document.getElementById("cartItems");
+  const box=
+    document.getElementById("cartItems");
 
- if(!cart.length){
 
-   box.innerHTML=`
-   <div class="empty">
-     <div>
-       <div class="empty-icon">🛍</div>
-       <strong>سبد خرید خالی است</strong>
-       <p style="margin-top:7px;font-size:10px">
-         مدل موردنظر خود را انتخاب کنید.
-       </p>
-     </div>
-   </div>`;
+  if(!cart.length){
 
-   document.getElementById("totalPrice")
-   .textContent="۰ تومان";
+    box.innerHTML=`
 
-   return;
- }
+      <div class="empty">
 
- let total=0;
+        <div>
 
- box.innerHTML=cart.map((item,index)=>{
+          <div class="empty-icon">
+            🛍
+          </div>
 
-   const p=products.find(x=>x.id===item.id);
+          <strong>
+            سبد خرید خالی است
+          </strong>
 
-   total+=p.price*item.qty;
+          <p style="
+            margin-top:7px;
+            font-size:10px;
+          ">
+            مدل موردنظر خود را انتخاب کنید.
+          </p>
 
-   return`
+        </div>
 
-   <div class="cart-item">
+      </div>
 
-     <img src="${p.image}" alt="${p.name}">
+    `;
 
-     <div class="cart-info">
 
-       <div class="cart-name">
-         ${p.name}
-       </div>
+    document.getElementById("totalPrice")
+      .textContent="۰ تومان";
 
-       <div class="cart-size">
-         سایز: ${item.size}
-       </div>
 
-       <div class="cart-price">
-         ${price(p.price)}
-       </div>
+    return;
 
-       <div class="qty">
+  }
 
-         <button onclick="changeQty(${index},1)">
-           +
-         </button>
 
-         <span>${item.qty}</span>
+  let total=0;
 
-         <button onclick="changeQty(${index},-1)">
-           −
-         </button>
 
-       </div>
+  box.innerHTML=cart.map(
+    (item,index)=>{
 
-       <button
-         class="remove"
-         onclick="removeCart(${index})"
-       >
-         حذف
-       </button>
+      const p=products.find(
+        x=>x.id===item.id
+      );
 
-     </div>
 
-   </div>
+      if(!p)return"";
 
-   `;
 
- }).join("");
+      total+=p.price*item.qty;
 
- document.getElementById("totalPrice")
- .textContent=price(total);
+
+      return`
+
+        <div class="cart-item">
+
+          <img
+            src="${p.image}"
+            alt="${p.name}"
+            loading="lazy"
+          >
+
+
+          <div class="cart-info">
+
+            <div class="cart-name">
+              ${p.name}
+            </div>
+
+            <div class="cart-size">
+              سایز: ${item.size}
+            </div>
+
+            <div class="cart-price">
+              ${price(p.price)}
+            </div>
+
+
+            <div class="qty">
+
+              <button
+                onclick="changeQty(${index},1)"
+              >
+                +
+              </button>
+
+              <span>
+                ${item.qty}
+              </span>
+
+              <button
+                onclick="changeQty(${index},-1)"
+              >
+                −
+              </button>
+
+            </div>
+
+
+            <button
+              class="remove"
+              onclick="removeCart(${index})"
+            >
+              حذف
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }
+  ).join("");
+
+
+  document.getElementById("totalPrice")
+    .textContent=price(total);
 
 }
+
 
 function changeQty(index,value){
 
- cart[index].qty+=value;
+  if(!cart[index])return;
 
- if(cart[index].qty<=0){
-   cart.splice(index,1);
- }
 
- saveCart();
+  cart[index].qty+=value;
+
+
+  if(cart[index].qty<=0){
+
+    cart.splice(index,1);
+
+  }
+
+
+  saveCart();
 
 }
+
 
 function removeCart(index){
 
- cart.splice(index,1);
+  if(!cart[index])return;
 
- saveCart();
 
- toast("محصول حذف شد.");
+  cart.splice(index,1);
+
+  saveCart();
+
+  toast("محصول حذف شد.");
 
 }
+
 
 function openCart(){
 
- renderCart();
+  renderCart();
 
- document.getElementById("cart")
- .classList.add("active");
 
- document.getElementById("overlay")
- .classList.add("active");
+  document
+    .getElementById("cart")
+    .classList.add("active");
 
- document.body.classList.add("no-scroll");
+
+  document
+    .getElementById("overlay")
+    .classList.add("active");
+
+
+  document.body.classList.add("no-scroll");
 
 }
+
 
 function closeCart(){
 
- document.getElementById("cart")
- .classList.remove("active");
+  document
+    .getElementById("cart")
+    .classList.remove("active");
 
- if(
-   !document.getElementById("modal")
-   .classList.contains("active")
- ){
-   document.getElementById("overlay")
-   .classList.remove("active");
 
-   document.body.classList.remove("no-scroll");
- }
+  if(
+    !document
+      .getElementById("modal")
+      .classList.contains("active")
+  ){
+
+    document
+      .getElementById("overlay")
+      .classList.remove("active");
+
+    document.body.classList.remove("no-scroll");
+
+  }
 
 }
+
 
 function checkout(){
 
- if(!cart.length){
-   toast("سبد خرید خالی است.");
-   return;
- }
+  if(!cart.length){
 
- toast("مرحله پرداخت آماده اتصال به درگاه است.");
+    toast("سبد خرید خالی است.");
+
+    return;
+
+  }
+
+
+  toast(
+    "مرحله پرداخت آماده اتصال به درگاه است."
+  );
 
 }
+
 
 /* =========================================================
    THEME
@@ -3054,16 +3771,18 @@ function checkout(){
 
 function toggleTheme(){
 
- document.body.classList.toggle("dark");
+  document.body.classList.toggle("dark");
 
- localStorage.setItem(
-   "negar_theme",
-   document.body.classList.contains("dark")
-   ? "dark"
-   : "light"
- );
+
+  localStorage.setItem(
+    "negar_theme",
+    document.body.classList.contains("dark")
+      ? "dark"
+      : "light"
+  );
 
 }
+
 
 /* =========================================================
    MOBILE MENU
@@ -3071,11 +3790,12 @@ function toggleTheme(){
 
 function toggleMenu(){
 
- document
- .getElementById("navLinks")
- .classList.toggle("active");
+  document
+    .getElementById("navLinks")
+    .classList.toggle("active");
 
 }
+
 
 /* =========================================================
    NEWSLETTER
@@ -3083,39 +3803,56 @@ function toggleMenu(){
 
 function subscribe(e){
 
- e.preventDefault();
+  e.preventDefault();
 
- const input=document.getElementById("email");
 
- if(!input.value)return;
+  const input=
+    document.getElementById("email");
 
- input.value="";
 
- toast("عضویت شما با موفقیت انجام شد.");
+  if(!input.value)return;
+
+
+  input.value="";
+
+
+  toast(
+    "عضویت شما با موفقیت انجام شد."
+  );
 
 }
+
 
 /* =========================================================
    TOAST
 ========================================================= */
 
-let toastTimer;
+let toastTimer=null;
+
 
 function toast(message){
 
- const el=document.getElementById("toast");
+  const el=
+    document.getElementById("toast");
 
- el.textContent=message;
 
- el.classList.add("show");
+  el.textContent=message;
 
- clearTimeout(toastTimer);
 
- toastTimer=setTimeout(()=>{
-   el.classList.remove("show");
- },2600);
+  el.classList.add("show");
+
+
+  clearTimeout(toastTimer);
+
+
+  toastTimer=setTimeout(()=>{
+
+    el.classList.remove("show");
+
+  },2600);
 
 }
+
 
 /* =========================================================
    CLOSE EVERYTHING
@@ -3123,353 +3860,699 @@ function toast(message){
 
 function closeEverything(){
 
- document.getElementById("cart")
- .classList.remove("active");
+  document
+    .getElementById("cart")
+    .classList.remove("active");
 
- document.getElementById("modal")
- .classList.remove("active");
 
- document.getElementById("overlay")
- .classList.remove("active");
+  document
+    .getElementById("modal")
+    .classList.remove("active");
 
- document.body.classList.remove("no-scroll");
+
+  document
+    .getElementById("overlay")
+    .classList.remove("active");
+
+
+  document.body.classList.remove("no-scroll");
 
 }
+
 
 /* =========================================================
    COUNTDOWN
 ========================================================= */
 
 const saleEnd=
- new Date().getTime()+
- (2*24*60*60*1000)+
- (12*60*60*1000);
+  Date.now()+
+  (2*24*60*60*1000)+
+  (12*60*60*1000);
+
 
 function countdown(){
 
- const now=new Date().getTime();
+  const distance=
+    saleEnd-Date.now();
 
- const distance=saleEnd-now;
 
- if(distance<=0)return;
+  if(distance<=0){
 
- const d=Math.floor(
-   distance/(1000*60*60*24)
- );
+    document.getElementById("days")
+      .textContent="00";
 
- const h=Math.floor(
-   (distance%(1000*60*60*24))
-   /(1000*60*60)
- );
+    document.getElementById("hours")
+      .textContent="00";
 
- const m=Math.floor(
-   (distance%(1000*60*60))
-   /(1000*60)
- );
+    document.getElementById("minutes")
+      .textContent="00";
 
- const s=Math.floor(
-   (distance%(1000*60))/1000
- );
+    document.getElementById("seconds")
+      .textContent="00";
 
- document.getElementById("days")
- .textContent=String(d).padStart(2,"0");
+    return;
 
- document.getElementById("hours")
- .textContent=String(h).padStart(2,"0");
+  }
 
- document.getElementById("minutes")
- .textContent=String(m).padStart(2,"0");
 
- document.getElementById("seconds")
- .textContent=String(s).padStart(2,"0");
+  const d=Math.floor(
+    distance/(1000*60*60*24)
+  );
+
+
+  const h=Math.floor(
+    (distance%(1000*60*60*24))
+    /(1000*60*60)
+  );
+
+
+  const m=Math.floor(
+    (distance%(1000*60*60))
+    /(1000*60)
+  );
+
+
+  const s=Math.floor(
+    (distance%(1000*60))/1000
+  );
+
+
+  document.getElementById("days")
+    .textContent=String(d).padStart(2,"0");
+
+
+  document.getElementById("hours")
+    .textContent=String(h).padStart(2,"0");
+
+
+  document.getElementById("minutes")
+    .textContent=String(m).padStart(2,"0");
+
+
+  document.getElementById("seconds")
+    .textContent=String(s).padStart(2,"0");
 
 }
+
 
 setInterval(countdown,1000);
 
+
 /* =========================================================
-   LENIS SMOOTH SCROLL
+   LIGHTWEIGHT GSAP
 ========================================================= */
 
-let lenis;
+function initAnimations(){
 
-if(window.Lenis){
+  if(!window.gsap)return;
 
- lenis=new Lenis({
-   duration:1.15,
-   smoothWheel:true,
-   touchMultiplier:1.2
- });
 
- function raf(time){
-   lenis.raf(time);
-   requestAnimationFrame(raf);
- }
+  gsap.registerPlugin(ScrollTrigger);
 
- requestAnimationFrame(raf);
+
+  /* HERO */
+
+  const heroItems=
+    gsap.utils.toArray(
+      ".hero-copy > *"
+    );
+
+
+  gsap.set(heroItems,{
+    y:35,
+    opacity:0
+  });
+
+
+  gsap.to(heroItems,{
+    y:0,
+    opacity:1,
+    duration:.75,
+    stagger:.08,
+    ease:"power3.out",
+    clearProps:"transform"
+  });
+
+
+  gsap.fromTo(
+    ".hero-media img",
+    {
+      scale:1.04
+    },
+    {
+      scale:1,
+      duration:1.5,
+      ease:"power2.out"
+    }
+  );
+
+
+  /* SECTION HEADERS */
+
+  gsap.utils
+    .toArray(".section-head")
+    .forEach(el=>{
+
+      gsap.fromTo(
+        el,
+        {
+          y:30,
+          opacity:0
+        },
+        {
+          y:0,
+          opacity:1,
+          duration:.7,
+          ease:"power3.out",
+          scrollTrigger:{
+            trigger:el,
+            start:"top 88%",
+            once:true
+          }
+        }
+      );
+
+    });
+
+
+  /* CATEGORIES */
+
+  gsap.utils
+    .toArray(".category-card")
+    .forEach((el,i)=>{
+
+      gsap.fromTo(
+        el,
+        {
+          y:40,
+          opacity:0
+        },
+        {
+          y:0,
+          opacity:1,
+          duration:.7,
+          delay:i*.05,
+          ease:"power3.out",
+          scrollTrigger:{
+            trigger:el,
+            start:"top 88%",
+            once:true
+          }
+        }
+      );
+
+    });
+
+
+  /* STORY */
+
+  const storyItems=
+    gsap.utils.toArray(
+      ".story-content > *"
+    );
+
+
+  gsap.fromTo(
+    storyItems,
+    {
+      y:30,
+      opacity:0
+    },
+    {
+      y:0,
+      opacity:1,
+      duration:.65,
+      stagger:.07,
+      ease:"power3.out",
+      scrollTrigger:{
+        trigger:".story",
+        start:"top 75%",
+        once:true
+      }
+    }
+  );
+
+
+  setTimeout(()=>{
+
+    ScrollTrigger.refresh();
+
+  },250);
 
 }
 
-/* =========================================================
-   GSAP
-========================================================= */
-
-if(window.gsap){
-
- gsap.registerPlugin(ScrollTrigger);
-
- /* HERO */
-
- gsap.from(".hero-copy > *",{
-   y:60,
-   opacity:0,
-   duration:1.2,
-   stagger:.12,
-   ease:"power4.out",
-   delay:1.1
- });
-
- gsap.to(".hero-media img",{
-   scale:1,
-   duration:2,
-   ease:"power3.out",
-   delay:.3
- });
-
- /* SECTIONS */
-
- gsap.utils.toArray(".section-head").forEach(el=>{
-
-   gsap.from(el,{
-     scrollTrigger:{
-       trigger:el,
-       start:"top 85%"
-     },
-     y:50,
-     opacity:0,
-     duration:1,
-     ease:"power4.out"
-   });
-
- });
-
- gsap.utils.toArray(".category-card").forEach((el,i)=>{
-
-   gsap.from(el,{
-     scrollTrigger:{
-       trigger:el,
-       start:"top 88%"
-     },
-     y:80,
-     opacity:0,
-     duration:1.1,
-     delay:i*.1,
-     ease:"power4.out"
-   });
-
- });
-
- gsap.utils.toArray(".product").forEach((el,i)=>{
-
-   gsap.from(el,{
-     scrollTrigger:{
-       trigger:el,
-       start:"top 92%"
-     },
-     y:40,
-     opacity:0,
-     duration:.8,
-     delay:(i%4)*.06,
-     ease:"power3.out"
-   });
-
- });
-
- gsap.from(".story-content > *",{
-   scrollTrigger:{
-     trigger:".story",
-     start:"top 70%"
-   },
-   y:45,
-   opacity:0,
-   duration:1,
-   stagger:.12,
-   ease:"power4.out"
- });
-
-}
 
 /* =========================================================
    HEADER SCROLL
 ========================================================= */
 
-window.addEventListener("scroll",()=>{
+let headerTick=false;
 
- const header=document.getElementById("header");
 
- if(window.scrollY>70){
-   header.classList.add("scrolled");
- }else{
-   header.classList.remove("scrolled");
- }
+window.addEventListener(
+  "scroll",
+  ()=>{
 
-});
+    if(headerTick)return;
+
+
+    headerTick=true;
+
+
+    requestAnimationFrame(()=>{
+
+      const header=
+        document.getElementById("header");
+
+
+      if(window.scrollY>70){
+
+        header.classList.add("scrolled");
+
+      }else{
+
+        header.classList.remove("scrolled");
+
+      }
+
+
+      headerTick=false;
+
+    });
+
+  },
+  {
+    passive:true
+  }
+);
+
 
 /* =========================================================
-   CURSOR
+   OPTIMIZED CURSOR
 ========================================================= */
 
-const dot=document.getElementById("cursorDot");
-const ring=document.getElementById("cursorRing");
+if(
+  window.matchMedia("(pointer:fine)").matches
+){
 
-let mouseX=0;
-let mouseY=0;
+  const dot=
+    document.getElementById("cursorDot");
 
-let ringX=0;
-let ringY=0;
+  const ring=
+    document.getElementById("cursorRing");
 
-document.addEventListener("mousemove",e=>{
 
- mouseX=e.clientX;
- mouseY=e.clientY;
+  let mouseX=0;
+  let mouseY=0;
 
- dot.style.left=mouseX+"px";
- dot.style.top=mouseY+"px";
+  let ringX=-100;
+  let ringY=-100;
 
-});
+  let cursorRunning=false;
 
-function cursorLoop(){
 
- ringX+=(mouseX-ringX)*.15;
- ringY+=(mouseY-ringY)*.15;
+  document.addEventListener(
+    "mousemove",
+    e=>{
 
- ring.style.left=ringX+"px";
- ring.style.top=ringY+"px";
+      mouseX=e.clientX;
+      mouseY=e.clientY;
 
- requestAnimationFrame(cursorLoop);
+
+      dot.style.transform=
+        `translate3d(
+          ${mouseX}px,
+          ${mouseY}px,
+          0
+        )`;
+
+
+      if(!cursorRunning){
+
+        cursorRunning=true;
+
+        requestAnimationFrame(
+          updateCursor
+        );
+
+      }
+
+    },
+    {
+      passive:true
+    }
+  );
+
+
+  function updateCursor(){
+
+    ringX+=
+      (mouseX-ringX)*.18;
+
+    ringY+=
+      (mouseY-ringY)*.18;
+
+
+    ring.style.transform=
+      `translate3d(
+        ${ringX}px,
+        ${ringY}px,
+        0
+      )`;
+
+
+    if(
+      Math.abs(mouseX-ringX)>.1 ||
+      Math.abs(mouseY-ringY)>.1
+    ){
+
+      requestAnimationFrame(
+        updateCursor
+      );
+
+    }else{
+
+      cursorRunning=false;
+
+    }
+
+  }
+
+
+  document.addEventListener(
+    "mouseover",
+    e=>{
+
+      const interactive=
+        e.target.closest(
+          "button,a,.category-card,.product-image"
+        );
+
+
+      ring.classList.toggle(
+        "big",
+        !!interactive
+      );
+
+    }
+  );
 
 }
 
-cursorLoop();
-
-document.addEventListener("mouseover",e=>{
-
- if(
-   e.target.closest("button") ||
-   e.target.closest("a") ||
-   e.target.closest(".category-card") ||
-   e.target.closest(".product-image")
- ){
-   ring.classList.add("big");
- }else{
-   ring.classList.remove("big");
- }
-
-});
 
 /* =========================================================
    MAGNETIC BUTTONS
 ========================================================= */
 
-document.addEventListener("mousemove",e=>{
+if(
+  window.matchMedia("(pointer:fine)").matches
+){
 
- document.querySelectorAll(".magnetic")
- .forEach(el=>{
+  const magneticElements=
+    document.querySelectorAll(
+      ".magnetic"
+    );
 
-   const rect=el.getBoundingClientRect();
 
-   const x=e.clientX-(rect.left+rect.width/2);
-   const y=e.clientY-(rect.top+rect.height/2);
+  document.addEventListener(
+    "mousemove",
+    e=>{
 
-   const distance=Math.sqrt(x*x+y*y);
+      magneticElements.forEach(el=>{
 
-   if(distance<100){
+        const rect=
+          el.getBoundingClientRect();
 
-     el.style.transform=
-       `translate(${x*.13}px,${y*.13}px)`;
 
-   }else{
+        const x=
+          e.clientX-
+          (rect.left+rect.width/2);
 
-     el.style.transform="translate(0,0)";
 
-   }
+        const y=
+          e.clientY-
+          (rect.top+rect.height/2);
 
- });
 
-});
+        const distance=
+          Math.sqrt(x*x+y*y);
+
+
+        if(distance<100){
+
+          el.style.transform=
+            `translate3d(
+              ${x*.10}px,
+              ${y*.10}px,
+              0
+            )`;
+
+        }
+
+      });
+
+    },
+    {
+      passive:true
+    }
+  );
+
+
+  magneticElements.forEach(el=>{
+
+    el.addEventListener(
+      "mouseleave",
+      ()=>{
+
+        el.style.transform=
+          "translate3d(0,0,0)";
+
+      }
+    );
+
+  });
+
+}
+
 
 /* =========================================================
    3D CATEGORY TILT
 ========================================================= */
 
-document.querySelectorAll(".tilt").forEach(card=>{
+if(
+  window.matchMedia("(pointer:fine)").matches
+){
 
- card.addEventListener("mousemove",e=>{
+  document
+    .querySelectorAll(".tilt")
+    .forEach(card=>{
 
-   if(window.innerWidth<800)return;
+      card.addEventListener(
+        "mousemove",
+        e=>{
 
-   const r=card.getBoundingClientRect();
+          const r=
+            card.getBoundingClientRect();
 
-   const x=(e.clientX-r.left)/r.width-.5;
-   const y=(e.clientY-r.top)/r.height-.5;
 
-   card.style.transform=
-     `perspective(900px)
-      rotateX(${y*-4}deg)
-      rotateY(${x*4}deg)
-      translateY(-3px)`;
+          const x=
+            (e.clientX-r.left)/
+            r.width-.5;
 
- });
 
- card.addEventListener("mouseleave",()=>{
+          const y=
+            (e.clientY-r.top)/
+            r.height-.5;
 
-   card.style.transform="";
 
- });
+          card.style.transform=
+            `perspective(900px)
+             rotateX(${y*-3}deg)
+             rotateY(${x*3}deg)
+             translateY(-3px)`;
 
-});
+        },
+        {
+          passive:true
+        }
+      );
+
+
+      card.addEventListener(
+        "mouseleave",
+        ()=>{
+
+          card.style.transform="";
+
+        }
+      );
+
+    });
+
+}
+
 
 /* =========================================================
    MOBILE LINKS
 ========================================================= */
 
-document.querySelectorAll(".nav-links a")
-.forEach(a=>{
+document
+  .querySelectorAll(".nav-links a")
+  .forEach(a=>{
 
- a.addEventListener("click",()=>{
-   document
-   .getElementById("navLinks")
-   .classList.remove("active");
- });
+    a.addEventListener(
+      "click",
+      ()=>{
 
-});
+        document
+          .getElementById("navLinks")
+          .classList.remove("active");
+
+      }
+    );
+
+  });
+
+
+/* =========================================================
+   ESC KEY
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  e=>{
+
+    if(e.key==="Escape"){
+
+      closeEverything();
+
+      document
+        .getElementById("navLinks")
+        .classList.remove("active");
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   THEME INITIALIZE
+========================================================= */
+
+if(
+  localStorage.getItem("negar_theme")==="dark"
+){
+
+  document.body.classList.add("dark");
+
+}
+
 
 /* =========================================================
    INITIALIZE
 ========================================================= */
 
-if(
- localStorage.getItem("negar_theme")==="dark"
-){
- document.body.classList.add("dark");
-}
-
 renderProducts();
+
 renderCart();
+
 updateCounts();
+
 countdown();
 
-window.addEventListener("load",()=>{
 
- setTimeout(()=>{
+/* =========================================================
+   SAFE PRELOADER
+========================================================= */
 
-   document
-   .getElementById("preloader")
-   .classList.add("done");
+let preloaderHidden=false;
 
- },1800);
 
-});
+function hidePreloader(){
+
+  if(preloaderHidden)return;
+
+  preloaderHidden=true;
+
+
+  const preloader=
+    document.getElementById("preloader");
+
+
+  if(!preloader)return;
+
+
+  preloader.classList.add("done");
+
+
+  setTimeout(()=>{
+
+    if(preloader.parentNode){
+
+      preloader.remove();
+
+    }
+
+  },700);
+
+}
+
+
+/*
+  دیگر منتظر تمام عکس‌های سایت نمی‌مانیم.
+  صفحه حداکثر حدود 700ms در Preloader می‌ماند.
+*/
+
+window.addEventListener(
+  "DOMContentLoaded",
+  ()=>{
+
+    setTimeout(
+      hidePreloader,
+      700
+    );
+
+  },
+  {
+    once:true
+  }
+);
+
+
+/*
+  Fail-safe:
+  حتی اگر CDN یا یک منبع خارجی مشکل داشت،
+  صفحه هیچ‌وقت در Preloader گیر نمی‌کند.
+*/
+
+setTimeout(
+  hidePreloader,
+  1800
+);
+
+
+/* =========================================================
+   START ANIMATIONS AFTER DOM
+========================================================= */
+
+if(
+  document.readyState==="loading"
+){
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    initAnimations,
+    {
+      once:true
+    }
+  );
+
+}else{
+
+  initAnimations();
+
+}
 
 </script>
 
