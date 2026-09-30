@@ -2,10 +2,10 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>NEGAR — فروشگاه کفش چرمی</title>
-<meta name="description" content="NEGAR — مجموعه کفش‌های چرمی زنانه و مردانه با طراحی لوکس و مدرن.">
+<meta name="description" content="NEGAR — فروشگاه کفش‌های چرمی زنانه و مردانه">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,13 +18,9 @@
   --card:#fff;
   --text:#151311;
   --muted:#817a72;
-  --line:rgba(21,19,17,.10);
-  --dark:#161310;
+  --line:rgba(21,19,17,.1);
   --gold:#b68a54;
-  --brown:#68462e;
-  --danger:#b83a32;
-  --shadow:0 30px 80px rgba(35,26,18,.10);
-  --radius:28px;
+  --dark:#161310;
   --ease:cubic-bezier(.22,1,.36,1);
 }
 
@@ -34,10 +30,8 @@
   --card:#1d1a17;
   --text:#f5f1eb;
   --muted:#9c948b;
-  --line:rgba(255,255,255,.10);
+  --line:rgba(255,255,255,.1);
   --dark:#f5f1eb;
-  --gold:#c49a63;
-  --shadow:0 30px 80px rgba(0,0,0,.3);
 }
 
 *{
@@ -87,8 +81,10 @@ img{
   color:#fff;
 }
 
+
 /* =========================================================
    PRELOADER
+   کاملاً مستقل از JS
 ========================================================= */
 
 .preloader{
@@ -96,29 +92,23 @@ img{
   inset:0;
   background:#15110e;
   color:#fff;
-  z-index:99999;
+  z-index:999999;
   display:flex;
   align-items:center;
   justify-content:center;
-  opacity:1;
-  visibility:visible;
-  transition:
-    opacity .65s var(--ease),
-    visibility .65s;
-}
-
-.preloader.done{
-  opacity:0;
-  visibility:hidden;
   pointer-events:none;
+
+  animation:preloaderExit .55s ease forwards;
+  animation-delay:.75s;
 }
 
 .preloader-inner{
   text-align:center;
+  animation:logoIntro .65s cubic-bezier(.22,1,.36,1) forwards;
 }
 
 .pre-logo{
-  font-size:clamp(42px,8vw,64px);
+  font-size:clamp(42px,8vw,65px);
   font-weight:900;
   letter-spacing:13px;
 }
@@ -129,23 +119,48 @@ img{
   height:1px;
   background:rgba(255,255,255,.2);
   margin:22px auto 0;
-  position:relative;
   overflow:hidden;
 }
 
 .pre-line span{
-  position:absolute;
-  inset:0;
+  display:block;
   width:0;
+  height:100%;
   background:#fff;
-  animation:loadLine .75s ease forwards;
+  animation:loadLine .6s ease forwards;
 }
 
 @keyframes loadLine{
+  from{width:0}
+  to{width:100%}
+}
+
+@keyframes logoIntro{
+  from{
+    opacity:0;
+    transform:translateY(15px);
+  }
   to{
-    width:100%;
+    opacity:1;
+    transform:translateY(0);
   }
 }
+
+@keyframes preloaderExit{
+  0%{
+    opacity:1;
+    visibility:visible;
+  }
+  99%{
+    opacity:0;
+    visibility:visible;
+  }
+  100%{
+    opacity:0;
+    visibility:hidden;
+  }
+}
+
 
 /* =========================================================
    CURSOR
@@ -181,10 +196,11 @@ img{
 }
 
 .cursor-ring.big{
-  width:68px;
-  height:68px;
+  width:65px;
+  height:65px;
   background:rgba(255,255,255,.08);
 }
+
 
 /* =========================================================
    HEADER
@@ -219,7 +235,7 @@ img{
   backdrop-filter:blur(24px);
   -webkit-backdrop-filter:blur(24px);
   color:#fff;
-  box-shadow:0 15px 50px rgba(0,0,0,.10);
+  box-shadow:0 15px 50px rgba(0,0,0,.1);
 }
 
 .logo{
@@ -230,8 +246,8 @@ img{
 }
 
 .logo small{
-  font-size:8px;
   display:block;
+  font-size:8px;
   letter-spacing:4px;
   font-weight:400;
   opacity:.6;
@@ -246,8 +262,8 @@ img{
 
 .nav-links a{
   font-size:12px;
-  position:relative;
   opacity:.78;
+  position:relative;
   transition:.3s;
 }
 
@@ -315,6 +331,7 @@ img{
 .menu-btn{
   display:none;
 }
+
 
 /* =========================================================
    HERO
@@ -431,7 +448,6 @@ img{
   transition:.4s var(--ease);
   position:relative;
   overflow:hidden;
-  will-change:transform;
 }
 
 .btn:before{
@@ -499,12 +515,8 @@ img{
 }
 
 @keyframes scrollLine{
-  0%{
-    top:-60%;
-  }
-  100%{
-    top:120%;
-  }
+  0%{top:-60%}
+  100%{top:120%}
 }
 
 .hero-number{
@@ -516,6 +528,7 @@ img{
   font-weight:900;
   color:rgba(255,255,255,.04);
 }
+
 
 /* =========================================================
    MARQUEE
@@ -533,7 +546,6 @@ img{
   display:flex;
   width:max-content;
   animation:marquee 28s linear infinite;
-  will-change:transform;
 }
 
 .marquee-item{
@@ -554,16 +566,13 @@ img{
 }
 
 @keyframes marquee{
-  from{
-    transform:translateX(0);
-  }
-  to{
-    transform:translateX(50%);
-  }
+  from{transform:translateX(0)}
+  to{transform:translateX(50%)}
 }
 
+
 /* =========================================================
-   SECTIONS
+   GENERAL
 ========================================================= */
 
 .container{
@@ -604,6 +613,7 @@ img{
   line-height:2;
 }
 
+
 /* =========================================================
    CATEGORIES
 ========================================================= */
@@ -619,14 +629,9 @@ img{
   border-radius:30px;
   overflow:hidden;
   position:relative;
-  transform-style:preserve-3d;
   cursor:pointer;
-  will-change:transform;
-}
-
-.category-card:nth-child(2),
-.category-card:nth-child(3){
-  min-height:460px;
+  transform-style:preserve-3d;
+  transition:transform .25s ease;
 }
 
 .category-card img{
@@ -639,11 +644,7 @@ img{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(
-    0deg,
-    rgba(0,0,0,.75),
-    transparent 65%
-  );
+  background:linear-gradient(0deg,rgba(0,0,0,.75),transparent 65%);
 }
 
 .category-card:hover img{
@@ -676,8 +677,9 @@ img{
   margin-top:7px;
 }
 
+
 /* =========================================================
-   PRODUCTS
+   SHOP
 ========================================================= */
 
 .shop-tools{
@@ -740,7 +742,7 @@ img{
 
 .product:hover{
   transform:translateY(-9px);
-  box-shadow:var(--shadow);
+  box-shadow:0 30px 80px rgba(35,26,18,.1);
 }
 
 @keyframes productIn{
@@ -794,7 +796,6 @@ img{
   border-radius:50%;
   border:1px solid rgba(255,255,255,.3);
   background:rgba(255,255,255,.8);
-  backdrop-filter:blur(10px);
   color:#111;
   transition:.3s;
 }
@@ -890,6 +891,7 @@ img{
   transform:rotate(90deg);
 }
 
+
 /* =========================================================
    STORY
 ========================================================= */
@@ -947,7 +949,6 @@ img{
   grid-template-columns:repeat(3,1fr);
   border-top:1px solid rgba(255,255,255,.12);
   padding-top:25px;
-  margin-top:10px;
 }
 
 .stat strong{
@@ -959,6 +960,7 @@ img{
   color:#777;
   font-size:10px;
 }
+
 
 /* =========================================================
    OFFER
@@ -977,11 +979,7 @@ img{
   align-items:center;
   padding:65px;
   background:
-    linear-gradient(
-      90deg,
-      rgba(18,13,9,.93),
-      rgba(18,13,9,.3)
-    ),
+    linear-gradient(90deg,rgba(18,13,9,.93),rgba(18,13,9,.3)),
     url("https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=1800&q=90")
     center/cover;
   color:#fff;
@@ -1037,6 +1035,7 @@ img{
   color:#888;
 }
 
+
 /* =========================================================
    NEWSLETTER
 ========================================================= */
@@ -1091,6 +1090,7 @@ img{
   border-radius:11px;
   font-weight:700;
 }
+
 
 /* =========================================================
    FOOTER
@@ -1148,6 +1148,7 @@ footer{
   font-size:9px;
 }
 
+
 /* =========================================================
    OVERLAY
 ========================================================= */
@@ -1168,6 +1169,7 @@ footer{
   opacity:1;
   visibility:visible;
 }
+
 
 /* =========================================================
    CART
@@ -1287,7 +1289,7 @@ footer{
 .remove{
   border:0;
   background:transparent;
-  color:var(--danger);
+  color:#b83a32;
   font-size:9px;
   margin-top:5px;
 }
@@ -1313,6 +1315,7 @@ footer{
   color:var(--bg);
   font-weight:800;
 }
+
 
 /* =========================================================
    MODAL
@@ -1447,6 +1450,7 @@ footer{
   font-weight:800;
 }
 
+
 /* =========================================================
    TOAST
 ========================================================= */
@@ -1471,6 +1475,7 @@ footer{
   opacity:1;
 }
 
+
 /* =========================================================
    RESPONSIVE
 ========================================================= */
@@ -1492,6 +1497,7 @@ footer{
   .footer-grid{
     grid-template-columns:2fr 1fr 1fr;
   }
+
 }
 
 @media(max-width:800px){
@@ -1578,9 +1584,7 @@ footer{
     grid-template-columns:1fr;
   }
 
-  .category-card,
-  .category-card:nth-child(2),
-  .category-card:nth-child(3){
+  .category-card{
     min-height:330px;
   }
 
@@ -1641,16 +1645,13 @@ footer{
   .modal-info{
     padding:30px;
   }
+
 }
 
 @media(max-width:520px){
 
   .nav-actions .search-button{
     display:none;
-  }
-
-  .hero{
-    min-height:650px;
   }
 
   .hero h1{
@@ -1743,14 +1744,11 @@ footer{
     gap:8px;
   }
 
-  .time-box{
-    width:55px;
-    height:55px;
-  }
 }
 
+
 /* =========================================================
-   REDUCE MOTION
+   REDUCED MOTION
 ========================================================= */
 
 @media(prefers-reduced-motion:reduce){
@@ -1768,95 +1766,147 @@ footer{
 </style>
 </head>
 
+
 <body>
+
 
 <!-- =======================================================
      PRELOADER
 ======================================================= -->
 
-<div class="preloader" id="preloader">
+<div class="preloader">
+
   <div class="preloader-inner">
-    <div class="pre-logo">NEGAR</div>
+
+    <div class="pre-logo">
+      NEGAR
+    </div>
+
     <div class="pre-line">
       <span></span>
     </div>
+
   </div>
+
 </div>
 
-<div class="cursor-dot" id="cursorDot"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+
+<div
+  class="cursor-dot"
+  id="cursorDot"
+></div>
+
+<div
+  class="cursor-ring"
+  id="cursorRing"
+></div>
 
 
 <!-- =======================================================
      HEADER
 ======================================================= -->
 
-<header class="header" id="header">
+<header
+  class="header"
+  id="header"
+>
 
-  <nav class="nav">
+<nav class="nav">
 
-    <a href="#home" class="logo magnetic">
-      NEGAR
-      <small>LEATHER HOUSE</small>
+  <a
+    href="#home"
+    class="logo magnetic"
+  >
+    NEGAR
+
+    <small>
+      LEATHER HOUSE
+    </small>
+
+  </a>
+
+
+  <div
+    class="nav-links"
+    id="navLinks"
+  >
+
+    <a href="#home">
+      خانه
     </a>
 
-    <div class="nav-links" id="navLinks">
+    <a href="#collection">
+      کالکشن
+    </a>
 
-      <a href="#home">خانه</a>
-      <a href="#collection">کالکشن</a>
-      <a href="#products">فروشگاه</a>
-      <a href="#story">داستان ما</a>
-      <a href="#offers">تخفیف ویژه</a>
+    <a href="#products">
+      فروشگاه
+    </a>
 
-    </div>
+    <a href="#story">
+      داستان ما
+    </a>
 
-    <div class="nav-actions">
+    <a href="#offers">
+      تخفیف ویژه
+    </a>
 
-      <button
-        class="nav-btn search-button"
-        onclick="searchProducts()"
-        title="جستجو"
+  </div>
+
+
+  <div class="nav-actions">
+
+    <button
+      class="nav-btn search-button"
+      onclick="searchProducts()"
+    >
+      ⌕
+    </button>
+
+    <button
+      class="nav-btn"
+      onclick="toggleTheme()"
+    >
+      ◐
+    </button>
+
+    <button
+      class="nav-btn"
+      onclick="showFavorites()"
+    >
+      ♡
+      <span
+        class="badge"
+        id="favCount"
       >
-        ⌕
-      </button>
+        0
+      </span>
+    </button>
 
-      <button
-        class="nav-btn"
-        onclick="toggleTheme()"
-        title="تغییر تم"
+    <button
+      class="nav-btn"
+      onclick="openCart()"
+    >
+      🛍
+
+      <span
+        class="badge"
+        id="cartCount"
       >
-        ◐
-      </button>
+        0
+      </span>
+    </button>
 
-      <button
-        class="nav-btn"
-        onclick="showFavorites()"
-        title="علاقه‌مندی"
-      >
-        ♡
-        <span class="badge" id="favCount">0</span>
-      </button>
+    <button
+      class="nav-btn menu-btn"
+      onclick="toggleMenu()"
+    >
+      ☰
+    </button>
 
-      <button
-        class="nav-btn"
-        onclick="openCart()"
-        title="سبد خرید"
-      >
-        🛍
-        <span class="badge" id="cartCount">0</span>
-      </button>
+  </div>
 
-      <button
-        class="nav-btn menu-btn"
-        onclick="toggleMenu()"
-        title="منو"
-      >
-        ☰
-      </button>
-
-    </div>
-
-  </nav>
+</nav>
 
 </header>
 
@@ -1865,7 +1915,10 @@ footer{
      HERO
 ======================================================= -->
 
-<section class="hero" id="home">
+<section
+  class="hero"
+  id="home"
+>
 
   <div class="hero-media">
 
@@ -1877,7 +1930,9 @@ footer{
 
   </div>
 
+
   <div class="hero-overlay"></div>
+
 
   <div class="hero-content">
 
@@ -1889,7 +1944,9 @@ footer{
 
       <h1>
         اصالت،
-        <span>در هر قدم.</span>
+        <span>
+          در هر قدم.
+        </span>
       </h1>
 
       <p class="hero-text">
@@ -1920,6 +1977,7 @@ footer{
 
   </div>
 
+
   <div class="hero-side">
 
     <span>
@@ -1929,6 +1987,7 @@ footer{
     <div class="scroll-line"></div>
 
   </div>
+
 
   <div class="hero-number">
     01
@@ -1984,126 +2043,130 @@ footer{
      COLLECTION
 ======================================================= -->
 
-<section class="section" id="collection">
+<section
+  class="section"
+  id="collection"
+>
 
-  <div class="container">
+<div class="container">
 
-    <div class="section-head">
+  <div class="section-head">
 
-      <div>
+    <div>
 
-        <div class="section-kicker">
-          EXPLORE COLLECTION
-        </div>
-
-        <h2 class="section-title">
-          برای هر قدم.
-        </h2>
-
+      <div class="section-kicker">
+        EXPLORE COLLECTION
       </div>
 
-      <p class="section-description">
-        از مدل‌های رسمی تا کفش‌های روزمره؛
-        همه‌چیز با یک ویژگی مشترک:
-        چرم باکیفیت و طراحی دقیق.
-      </p>
+      <h2 class="section-title">
+        برای هر قدم.
+      </h2>
 
     </div>
 
-    <div class="categories">
+    <p class="section-description">
+      از مدل‌های رسمی تا کفش‌های روزمره؛
+      همه‌چیز با یک ویژگی مشترک:
+      چرم باکیفیت و طراحی دقیق.
+    </p>
 
-      <div
-        class="category-card tilt"
-        onclick="filterProducts('زنانه')"
+  </div>
+
+
+  <div class="categories">
+
+    <div
+      class="category-card tilt"
+      onclick="filterProducts('زنانه')"
+    >
+
+      <img
+        src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=1300&q=90"
+        alt="کفش چرمی زنانه"
+        loading="lazy"
       >
 
-        <img
-          src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=1300&q=90"
-          alt="کفش چرمی زنانه"
-          loading="lazy"
-        >
+      <div class="category-content">
 
-        <div class="category-content">
+        <small>
+          01 / WOMEN
+        </small>
 
-          <small>
-            01 / WOMEN
-          </small>
+        <h3>
+          زنانه
+        </h3>
 
-          <h3>
-            زنانه
-          </h3>
-
-          <span>
-            کالکشن کفش‌های چرمی زنانه ←
-          </span>
-
-        </div>
+        <span>
+          کالکشن کفش‌های چرمی زنانه ←
+        </span>
 
       </div>
 
+    </div>
 
-      <div
-        class="category-card tilt"
-        onclick="filterProducts('مردانه')"
+
+    <div
+      class="category-card tilt"
+      onclick="filterProducts('مردانه')"
+    >
+
+      <img
+        src="https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=1100&q=90"
+        alt="کفش چرمی مردانه"
+        loading="lazy"
       >
 
-        <img
-          src="https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=1100&q=90"
-          alt="کفش چرمی مردانه"
-          loading="lazy"
-        >
+      <div class="category-content">
 
-        <div class="category-content">
+        <small>
+          02 / MEN
+        </small>
 
-          <small>
-            02 / MEN
-          </small>
+        <h3>
+          مردانه
+        </h3>
 
-          <h3>
-            مردانه
-          </h3>
-
-          <span>
-            کالکشن کفش‌های چرمی مردانه ←
-          </span>
-
-        </div>
+        <span>
+          کالکشن کفش‌های چرمی مردانه ←
+        </span>
 
       </div>
 
+    </div>
 
-      <div
-        class="category-card tilt"
-        onclick="filterProducts('رسمی')"
+
+    <div
+      class="category-card tilt"
+      onclick="filterProducts('رسمی')"
+    >
+
+      <img
+        src="https://images.unsplash.com/photo-1614252369475-531eba835eb1?auto=format&fit=crop&w=1100&q=90"
+        alt="کفش رسمی چرمی"
+        loading="lazy"
       >
 
-        <img
-          src="https://images.unsplash.com/photo-1614252369475-531eba835eb1?auto=format&fit=crop&w=1100&q=90"
-          alt="کفش رسمی چرمی"
-          loading="lazy"
-        >
+      <div class="category-content">
 
-        <div class="category-content">
+        <small>
+          03 / FORMAL
+        </small>
 
-          <small>
-            03 / FORMAL
-          </small>
+        <h3>
+          رسمی
+        </h3>
 
-          <h3>
-            رسمی
-          </h3>
-
-          <span>
-            برای موقعیت‌های خاص ←
-          </span>
-
-        </div>
+        <span>
+          برای موقعیت‌های خاص ←
+        </span>
 
       </div>
 
     </div>
 
   </div>
+
+</div>
 
 </section>
 
@@ -2112,107 +2175,110 @@ footer{
      PRODUCTS
 ======================================================= -->
 
-<section class="section" id="products">
+<section
+  class="section"
+  id="products"
+>
 
-  <div class="container">
+<div class="container">
 
-    <div class="section-head">
+  <div class="section-head">
 
-      <div>
+    <div>
 
-        <div class="section-kicker">
-          NEGAR COLLECTION
-        </div>
-
-        <h2 class="section-title">
-          انتخاب‌های شما.
-        </h2>
-
+      <div class="section-kicker">
+        NEGAR COLLECTION
       </div>
 
-      <p class="section-description">
-        هر مدل از مجموعه NEGAR با تمرکز روی فرم،
-        راحتی و ظاهر چرم انتخاب شده است.
-      </p>
+      <h2 class="section-title">
+        انتخاب‌های شما.
+      </h2>
 
     </div>
 
-
-    <div class="shop-tools">
-
-      <div class="filters">
-
-        <button
-          class="filter active"
-          onclick="filterProducts('همه')"
-        >
-          همه
-        </button>
-
-        <button
-          class="filter"
-          onclick="filterProducts('زنانه')"
-        >
-          زنانه
-        </button>
-
-        <button
-          class="filter"
-          onclick="filterProducts('مردانه')"
-        >
-          مردانه
-        </button>
-
-        <button
-          class="filter"
-          onclick="filterProducts('اسپرت')"
-        >
-          اسپرت
-        </button>
-
-        <button
-          class="filter"
-          onclick="filterProducts('رسمی')"
-        >
-          رسمی
-        </button>
-
-      </div>
-
-
-      <select
-        class="sort"
-        id="sort"
-        onchange="sortProducts()"
-      >
-
-        <option value="default">
-          مرتب‌سازی
-        </option>
-
-        <option value="low">
-          ارزان‌ترین
-        </option>
-
-        <option value="high">
-          گران‌ترین
-        </option>
-
-        <option value="new">
-          جدیدترین
-        </option>
-
-      </select>
-
-    </div>
-
-
-    <div
-      class="product-grid"
-      id="productGrid"
-    ></div>
+    <p class="section-description">
+      هر مدل از مجموعه NEGAR با تمرکز روی فرم،
+      راحتی و ظاهر چرم انتخاب شده است.
+    </p>
 
   </div>
+
+
+  <div class="shop-tools">
+
+    <div class="filters">
+
+      <button
+        class="filter active"
+        onclick="filterProducts('همه')"
+      >
+        همه
+      </button>
+
+      <button
+        class="filter"
+        onclick="filterProducts('زنانه')"
+      >
+        زنانه
+      </button>
+
+      <button
+        class="filter"
+        onclick="filterProducts('مردانه')"
+      >
+        مردانه
+      </button>
+
+      <button
+        class="filter"
+        onclick="filterProducts('اسپرت')"
+      >
+        اسپرت
+      </button>
+
+      <button
+        class="filter"
+        onclick="filterProducts('رسمی')"
+      >
+        رسمی
+      </button>
+
+    </div>
+
+
+    <select
+      class="sort"
+      id="sort"
+      onchange="sortProducts()"
+    >
+
+      <option value="default">
+        مرتب‌سازی
+      </option>
+
+      <option value="low">
+        ارزان‌ترین
+      </option>
+
+      <option value="high">
+        گران‌ترین
+      </option>
+
+      <option value="new">
+        جدیدترین
+      </option>
+
+    </select>
+
+  </div>
+
+
+  <div
+    class="product-grid"
+    id="productGrid"
+  ></div>
+
+</div>
 
 </section>
 
@@ -2221,80 +2287,60 @@ footer{
      STORY
 ======================================================= -->
 
-<section class="story" id="story">
+<section
+  class="story"
+  id="story"
+>
 
-  <div class="story-image">
+<div class="story-image">
 
-    <img
-      src="https://images.unsplash.com/photo-1605733160314-4fc7dac4bb16?auto=format&fit=crop&w=1400&q=90"
-      alt="NEGAR Leather Craft"
-      loading="lazy"
-    >
+  <img
+    src="https://images.unsplash.com/photo-1605733160314-4fc7dac4bb16?auto=format&fit=crop&w=1400&q=90"
+    alt="NEGAR Leather"
+    loading="lazy"
+  >
 
+</div>
+
+
+<div class="story-content">
+
+  <div class="section-kicker">
+    THE NEGAR STORY
   </div>
 
+  <h2>
+    چیزی بیشتر از یک کفش.
+  </h2>
 
-  <div class="story-content">
+  <p>
+    ما در NEGAR معتقدیم کفش فقط چیزی نیست که بپوشی.
+    بخشی از استایل توست؛ چیزی که هر روز همراه تو حرکت می‌کند.
+    برای همین، در انتخاب مدل‌ها روی کیفیت چرم،
+    طراحی و راحتی تمرکز کرده‌ایم.
+  </p>
 
-    <div class="section-kicker">
-      THE NEGAR STORY
+
+  <div class="story-stats">
+
+    <div class="stat">
+      <strong>100%</strong>
+      <span>LEATHER</span>
     </div>
 
-    <h2>
-      چیزی بیشتر از یک کفش.
-    </h2>
+    <div class="stat">
+      <strong>2026</strong>
+      <span>COLLECTION</span>
+    </div>
 
-    <p>
-      ما در NEGAR معتقدیم کفش فقط چیزی نیست که بپوشی.
-      بخشی از استایل توست؛ چیزی که هر روز همراه تو حرکت می‌کند.
-      برای همین، در انتخاب مدل‌ها روی کیفیت چرم،
-      طراحی و راحتی تمرکز کرده‌ایم.
-    </p>
-
-
-    <div class="story-stats">
-
-      <div class="stat">
-
-        <strong>
-          100%
-        </strong>
-
-        <span>
-          LEATHER
-        </span>
-
-      </div>
-
-
-      <div class="stat">
-
-        <strong>
-          2026
-        </strong>
-
-        <span>
-          COLLECTION
-        </span>
-
-      </div>
-
-
-      <div class="stat">
-
-        <strong>
-          24/7
-        </strong>
-
-        <span>
-          SUPPORT
-        </span>
-
-      </div>
-
+    <div class="stat">
+      <strong>24/7</strong>
+      <span>SUPPORT</span>
     </div>
 
   </div>
+
+</div>
 
 </section>
 
@@ -2303,96 +2349,76 @@ footer{
      OFFER
 ======================================================= -->
 
-<section class="offer" id="offers">
+<section
+  class="offer"
+  id="offers"
+>
 
-  <div class="container">
+<div class="container">
 
-    <div class="offer-box">
+  <div class="offer-box">
 
-      <div class="offer-content">
+    <div class="offer-content">
 
-        <small>
-          LIMITED LEATHER SALE
-        </small>
+      <small>
+        LIMITED LEATHER SALE
+      </small>
 
-        <h2>
-          تا ۳۰٪ تخفیف
-        </h2>
+      <h2>
+        تا ۳۰٪ تخفیف
+      </h2>
 
-        <p>
-          بعضی مدل‌های منتخب کالکشن برای مدت محدود
-          با قیمت ویژه ارائه می‌شوند.
-        </p>
+      <p>
+        بعضی مدل‌های منتخب کالکشن برای مدت محدود
+        با قیمت ویژه ارائه می‌شوند.
+      </p>
 
 
-        <div class="timer">
+      <div class="timer">
 
-          <div class="time-box">
-            <div>
-              <strong id="days">
-                02
-              </strong>
-
-              <span>
-                روز
-              </span>
-            </div>
+        <div class="time-box">
+          <div>
+            <strong id="days">02</strong>
+            <span>روز</span>
           </div>
-
-
-          <div class="time-box">
-            <div>
-              <strong id="hours">
-                12
-              </strong>
-
-              <span>
-                ساعت
-              </span>
-            </div>
-          </div>
-
-
-          <div class="time-box">
-            <div>
-              <strong id="minutes">
-                30
-              </strong>
-
-              <span>
-                دقیقه
-              </span>
-            </div>
-          </div>
-
-
-          <div class="time-box">
-            <div>
-              <strong id="seconds">
-                00
-              </strong>
-
-              <span>
-                ثانیه
-              </span>
-            </div>
-          </div>
-
         </div>
 
+        <div class="time-box">
+          <div>
+            <strong id="hours">12</strong>
+            <span>ساعت</span>
+          </div>
+        </div>
 
-        <a
-          href="#products"
-          class="btn btn-dark"
-        >
-          مشاهده تخفیف‌ها
-        </a>
+        <div class="time-box">
+          <div>
+            <strong id="minutes">30</strong>
+            <span>دقیقه</span>
+          </div>
+        </div>
+
+        <div class="time-box">
+          <div>
+            <strong id="seconds">00</strong>
+            <span>ثانیه</span>
+          </div>
+        </div>
 
       </div>
+
+
+      <a
+        href="#products"
+        class="btn btn-dark"
+      >
+        مشاهده تخفیف‌ها
+      </a>
 
     </div>
 
   </div>
+
+</div>
 
 </section>
 
@@ -2403,40 +2429,40 @@ footer{
 
 <section class="newsletter">
 
-  <div class="newsletter-box">
+<div class="newsletter-box">
 
-    <div class="section-kicker">
-      STAY IN TOUCH
-    </div>
+  <div class="section-kicker">
+    STAY IN TOUCH
+  </div>
 
-    <h2>
-      همراه NEGAR باش.
-    </h2>
+  <h2>
+    همراه NEGAR باش.
+  </h2>
 
-    <p>
-      جدیدترین مدل‌ها و تخفیف‌ها را زودتر از بقیه ببین.
-    </p>
+  <p>
+    جدیدترین مدل‌ها و تخفیف‌ها را زودتر از بقیه ببین.
+  </p>
 
 
-    <form
-      class="news-form"
-      onsubmit="subscribe(event)"
+  <form
+    class="news-form"
+    onsubmit="subscribe(event)"
+  >
+
+    <input
+      id="email"
+      type="email"
+      placeholder="ایمیل شما"
+      required
     >
 
-      <input
-        id="email"
-        type="email"
-        placeholder="ایمیل شما"
-        required
-      >
+    <button type="submit">
+      عضویت
+    </button>
 
-      <button type="submit">
-        عضویت
-      </button>
+  </form>
 
-    </form>
-
-  </div>
+</div>
 
 </section>
 
@@ -2447,129 +2473,127 @@ footer{
 
 <footer>
 
-  <div class="footer">
+<div class="footer">
 
-    <div class="footer-grid">
+  <div class="footer-grid">
 
-      <div class="footer-brand">
+    <div class="footer-brand">
 
-        <div class="logo">
+      <div class="logo">
+        NEGAR
 
-          NEGAR
-
-          <small>
-            LEATHER HOUSE
-          </small>
-
-        </div>
-
-        <p>
-          NEGAR؛ فروشگاه کفش‌های چرمی زنانه و مردانه
-          برای کسانی که جزئیات برایشان مهم است.
-        </p>
-
+        <small>
+          LEATHER HOUSE
+        </small>
       </div>
 
-
-      <div>
-
-        <h4>
-          فروشگاه
-        </h4>
-
-        <a href="#products">
-          همه محصولات
-        </a>
-
-        <a
-          href="#products"
-          onclick="filterProducts('زنانه')"
-        >
-          زنانه
-        </a>
-
-        <a
-          href="#products"
-          onclick="filterProducts('مردانه')"
-        >
-          مردانه
-        </a>
-
-        <a
-          href="#products"
-          onclick="filterProducts('رسمی')"
-        >
-          رسمی
-        </a>
-
-      </div>
-
-
-      <div>
-
-        <h4>
-          راهنما
-        </h4>
-
-        <a href="#">
-          راهنمای سایز
-        </a>
-
-        <a href="#">
-          شرایط ارسال
-        </a>
-
-        <a href="#">
-          تعویض کالا
-        </a>
-
-        <a href="#">
-          سؤالات متداول
-        </a>
-
-      </div>
-
-
-      <div>
-
-        <h4>
-          ارتباط
-        </h4>
-
-        <a href="#">
-          Instagram
-        </a>
-
-        <a href="#">
-          Telegram
-        </a>
-
-        <a href="#">
-          WhatsApp
-        </a>
-
-        <a href="#">
-          Contact
-        </a>
-
-      </div>
+      <p>
+        NEGAR؛ فروشگاه کفش‌های چرمی زنانه و مردانه
+        برای کسانی که جزئیات برایشان مهم است.
+      </p>
 
     </div>
 
 
-    <div class="footer-bottom">
+    <div>
 
-      <span>
-        © 2026 NEGAR Leather House
-      </span>
+      <h4>
+        فروشگاه
+      </h4>
 
-      <span>
-        Crafted with precision.
-      </span>
+      <a href="#products">
+        همه محصولات
+      </a>
+
+      <a
+        href="#products"
+        onclick="filterProducts('زنانه')"
+      >
+        زنانه
+      </a>
+
+      <a
+        href="#products"
+        onclick="filterProducts('مردانه')"
+      >
+        مردانه
+      </a>
+
+      <a
+        href="#products"
+        onclick="filterProducts('رسمی')"
+      >
+        رسمی
+      </a>
+
+    </div>
+
+
+    <div>
+
+      <h4>
+        راهنما
+      </h4>
+
+      <a href="#">
+        راهنمای سایز
+      </a>
+
+      <a href="#">
+        شرایط ارسال
+      </a>
+
+      <a href="#">
+        تعویض کالا
+      </a>
+
+      <a href="#">
+        سؤالات متداول
+      </a>
+
+    </div>
+
+
+    <div>
+
+      <h4>
+        ارتباط
+      </h4>
+
+      <a href="#">
+        Instagram
+      </a>
+
+      <a href="#">
+        Telegram
+      </a>
+
+      <a href="#">
+        WhatsApp
+      </a>
+
+      <a href="#">
+        Contact
+      </a>
 
     </div>
 
   </div>
+
+
+  <div class="footer-bottom">
+
+    <span>
+      © 2026 NEGAR Leather House
+    </span>
+
+    <span>
+      Crafted with precision.
+    </span>
+
+  </div>
+
+</div>
 
 </footer>
 
@@ -2630,7 +2654,6 @@ footer{
 
     </div>
 
-
     <button
       class="checkout"
       onclick="checkout()"
@@ -2644,7 +2667,7 @@ footer{
 
 
 <!-- =======================================================
-     PRODUCT MODAL
+     MODAL
 ======================================================= -->
 
 <div
@@ -2696,75 +2719,16 @@ footer{
 
         <div class="sizes">
 
-          <button
-            class="size"
-            onclick="chooseSize(this)"
-          >
-            ۳۶
-          </button>
-
-          <button
-            class="size"
-            onclick="chooseSize(this)"
-          >
-            ۳۷
-          </button>
-
-          <button
-            class="size"
-            onclick="chooseSize(this)"
-          >
-            ۳۸
-          </button>
-
-          <button
-            class="size"
-            onclick="chooseSize(this)"
-          >
-            ۳۹
-          </button>
-
-          <button
-            class="size"
-            onclick="chooseSize(this)"
-          >
-            ۴۰
-          </button>
-
-          <button
-            class="size"
-            onclick="chooseSize(this)"
-          >
-            ۴۱
-          </button>
-
-          <button
-            class="size"
-            onclick="chooseSize(this)"
-          >
-            ۴۲
-          </button>
-
-          <button
-            class="size"
-            onclick="chooseSize(this)"
-          >
-            ۴۳
-          </button>
-
-          <button
-            class="size"
-            onclick="chooseSize(this)"
-          >
-            ۴۴
-          </button>
-
-          <button
-            class="size"
-            onclick="chooseSize(this)"
-          >
-            ۴۵
-          </button>
+          <button class="size" onclick="chooseSize(this)">۳۶</button>
+          <button class="size" onclick="chooseSize(this)">۳۷</button>
+          <button class="size" onclick="chooseSize(this)">۳۸</button>
+          <button class="size" onclick="chooseSize(this)">۳۹</button>
+          <button class="size" onclick="chooseSize(this)">۴۰</button>
+          <button class="size" onclick="chooseSize(this)">۴۱</button>
+          <button class="size" onclick="chooseSize(this)">۴۲</button>
+          <button class="size" onclick="chooseSize(this)">۴۳</button>
+          <button class="size" onclick="chooseSize(this)">۴۴</button>
+          <button class="size" onclick="chooseSize(this)">۴۵</button>
 
         </div>
 
@@ -2802,7 +2766,7 @@ footer{
 <script>
 
 /* =========================================================
-   PRODUCT DATABASE
+   PRODUCTS
 ========================================================= */
 
 const products=[
@@ -2978,18 +2942,14 @@ const products=[
 ];
 
 
-/* =========================================================
-   STATE
-========================================================= */
-
 let currentProducts=[...products];
 
 let cart=JSON.parse(
-  localStorage.getItem("negar_cart") || "[]"
+  localStorage.getItem("negar_cart")||"[]"
 );
 
 let favorites=JSON.parse(
-  localStorage.getItem("negar_favorites") || "[]"
+  localStorage.getItem("negar_favorites")||"[]"
 );
 
 let selectedProduct=null;
@@ -2997,7 +2957,7 @@ let selectedSize=null;
 
 
 /* =========================================================
-   PRICE
+   HELPERS
 ========================================================= */
 
 function price(value){
@@ -3009,12 +2969,13 @@ function price(value){
 
 
 /* =========================================================
-   RENDER PRODUCTS
+   PRODUCTS RENDER
 ========================================================= */
 
 function renderProducts(){
 
-  const grid=document.getElementById("productGrid");
+  const grid=
+    document.getElementById("productGrid");
 
   if(!currentProducts.length){
 
@@ -3030,109 +2991,106 @@ function renderProducts(){
     `;
 
     return;
-
   }
 
 
-  grid.innerHTML=currentProducts.map((p,index)=>{
+  grid.innerHTML=
+    currentProducts.map((p,index)=>{
 
-    const fav=favorites.includes(p.id);
+      const fav=
+        favorites.includes(p.id);
 
-    return`
+      return`
 
-      <article
-        class="product"
-        style="animation-delay:${Math.min(index*.045,.35)}s"
-      >
-
-        <div
-          class="product-image"
-          onclick="openProduct(${p.id})"
+        <article
+          class="product"
+          style="animation-delay:${Math.min(index*.045,.35)}s"
         >
 
-          <span class="product-badge">
-            ${p.badge}
-          </span>
-
-          <button
-            class="wish ${fav?"active":""}"
-            onclick="toggleFavorite(event,${p.id})"
-          >
-            ${fav?"♥":"♡"}
-          </button>
-
-          <img
-            src="${p.image}"
-            alt="${p.name}"
-            loading="lazy"
-          >
-
-          <button
-            class="quick-view"
+          <div
+            class="product-image"
             onclick="openProduct(${p.id})"
           >
-            مشاهده سریع
-          </button>
 
-        </div>
-
-
-        <div class="product-info">
-
-          <div class="product-meta">
-
-            <span>
-              ${p.category} / ${p.type}
+            <span class="product-badge">
+              ${p.badge}
             </span>
-
-            <span class="leather">
-              ● چرم طبیعی
-            </span>
-
-          </div>
-
-
-          <div class="product-name">
-            ${p.name}
-          </div>
-
-
-          <div class="rating">
-            ★ ${p.rating}
-          </div>
-
-
-          <div class="price-row">
-
-            <div>
-
-              <span class="old-price">
-                ${price(p.oldPrice)}
-              </span>
-
-              <div class="price">
-                ${price(p.price)}
-              </div>
-
-            </div>
-
 
             <button
-              class="add magnetic"
-              onclick="quickAdd(${p.id})"
+              class="wish ${fav?"active":""}"
+              onclick="toggleFavorite(event,${p.id})"
             >
-              +
+              ${fav?"♥":"♡"}
+            </button>
+
+            <img
+              src="${p.image}"
+              alt="${p.name}"
+              loading="lazy"
+            >
+
+            <button
+              class="quick-view"
+              onclick="openProduct(${p.id})"
+            >
+              مشاهده سریع
             </button>
 
           </div>
 
-        </div>
 
-      </article>
+          <div class="product-info">
 
-    `;
+            <div class="product-meta">
 
-  }).join("");
+              <span>
+                ${p.category} / ${p.type}
+              </span>
+
+              <span class="leather">
+                ● چرم طبیعی
+              </span>
+
+            </div>
+
+            <div class="product-name">
+              ${p.name}
+            </div>
+
+            <div class="rating">
+              ★ ${p.rating}
+            </div>
+
+            <div class="price-row">
+
+              <div>
+
+                <span class="old-price">
+                  ${price(p.oldPrice)}
+                </span>
+
+                <div class="price">
+                  ${price(p.price)}
+                </div>
+
+              </div>
+
+              <button
+                class="add magnetic"
+                onclick="quickAdd(${p.id})"
+              >
+                +
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      `;
+
+    }).join("");
 
 }
 
@@ -3143,14 +3101,15 @@ function renderProducts(){
 
 function filterProducts(filter){
 
-  document.querySelectorAll(".filter").forEach(btn=>{
+  document.querySelectorAll(".filter")
+    .forEach(btn=>{
 
-    btn.classList.toggle(
-      "active",
-      btn.textContent.trim()===filter
-    );
+      btn.classList.toggle(
+        "active",
+        btn.textContent.trim()===filter
+      );
 
-  });
+    });
 
 
   if(filter==="همه"){
@@ -3159,10 +3118,11 @@ function filterProducts(filter){
 
   }else{
 
-    currentProducts=products.filter(p=>
-      p.category===filter ||
-      p.type===filter
-    );
+    currentProducts=
+      products.filter(p=>
+        p.category===filter ||
+        p.type===filter
+      );
 
   }
 
@@ -3173,8 +3133,7 @@ function filterProducts(filter){
   document
     .getElementById("products")
     .scrollIntoView({
-      behavior:"smooth",
-      block:"start"
+      behavior:"smooth"
     });
 
 }
@@ -3196,25 +3155,19 @@ function sortProducts(){
       (a,b)=>a.price-b.price
     );
 
-  }
-
-  else if(value==="high"){
+  }else if(value==="high"){
 
     currentProducts.sort(
       (a,b)=>b.price-a.price
     );
 
-  }
-
-  else if(value==="new"){
+  }else if(value==="new"){
 
     currentProducts.sort(
       (a,b)=>b.id-a.id
     );
 
-  }
-
-  else{
+  }else{
 
     currentProducts.sort(
       (a,b)=>a.id-b.id
@@ -3234,32 +3187,23 @@ function sortProducts(){
 
 function searchProducts(){
 
-  const query=prompt(
-    "نام کفش، دسته‌بندی یا نوع محصول را وارد کنید:"
-  );
+  const query=
+    prompt(
+      "نام کفش، دسته‌بندی یا نوع محصول را وارد کنید:"
+    );
 
   if(!query)return;
 
 
-  currentProducts=products.filter(p=>
-
-    p.name
-      .toLowerCase()
-      .includes(query.toLowerCase())
-
-    ||
-
-    p.category.includes(query)
-
-    ||
-
-    p.type.includes(query)
-
-    ||
-
-    p.material.includes(query)
-
-  );
+  currentProducts=
+    products.filter(p=>
+      p.name.toLowerCase().includes(
+        query.toLowerCase()
+      ) ||
+      p.category.includes(query) ||
+      p.type.includes(query) ||
+      p.material.includes(query)
+    );
 
 
   renderProducts();
@@ -3292,9 +3236,8 @@ function toggleFavorite(e,id){
 
   if(favorites.includes(id)){
 
-    favorites=favorites.filter(
-      x=>x!==id
-    );
+    favorites=
+      favorites.filter(x=>x!==id);
 
     toast("از علاقه‌مندی‌ها حذف شد.");
 
@@ -3314,6 +3257,7 @@ function toggleFavorite(e,id){
 
 
   updateCounts();
+
   renderProducts();
 
 }
@@ -3326,13 +3270,13 @@ function showFavorites(){
     toast("هنوز محصولی ذخیره نکرده‌اید.");
 
     return;
-
   }
 
 
-  currentProducts=products.filter(
-    p=>favorites.includes(p.id)
-  );
+  currentProducts=
+    products.filter(
+      p=>favorites.includes(p.id)
+    );
 
 
   renderProducts();
@@ -3364,14 +3308,13 @@ function updateCounts(){
 
 
 /* =========================================================
-   PRODUCT MODAL
+   MODAL
 ========================================================= */
 
 function openProduct(id){
 
-  const p=products.find(
-    x=>x.id===id
-  );
+  const p=
+    products.find(x=>x.id===id);
 
   if(!p)return;
 
@@ -3380,14 +3323,14 @@ function openProduct(id){
   selectedSize=null;
 
 
-  document
-    .querySelectorAll(".size")
+  document.querySelectorAll(".size")
     .forEach(x=>
       x.classList.remove("active")
     );
 
 
-  document.getElementById("modalImg").src=p.image;
+  document.getElementById("modalImg").src=
+    p.image;
 
   document.getElementById("modalCat")
     .textContent=
@@ -3444,12 +3387,10 @@ function closeModal(){
 
 function chooseSize(btn){
 
-  document
-    .querySelectorAll(".size")
+  document.querySelectorAll(".size")
     .forEach(x=>
       x.classList.remove("active")
     );
-
 
   btn.classList.add("active");
 
@@ -3468,7 +3409,6 @@ function addModalProduct(){
     toast("ابتدا سایز را انتخاب کنید.");
 
     return;
-
   }
 
 
@@ -3496,9 +3436,10 @@ function quickAdd(id){
 
 function addToCart(id,size){
 
-  const exists=cart.find(
-    x=>x.id===id && x.size===size
-  );
+  const exists=
+    cart.find(
+      x=>x.id===id && x.size===size
+    );
 
 
   if(exists){
@@ -3508,8 +3449,8 @@ function addToCart(id,size){
   }else{
 
     cart.push({
-      id:id,
-      size:size,
+      id,
+      size,
       qty:1
     });
 
@@ -3530,8 +3471,8 @@ function saveCart(){
     JSON.stringify(cart)
   );
 
-
   renderCart();
+
   updateCounts();
 
 }
@@ -3569,29 +3510,24 @@ function renderCart(){
         </div>
 
       </div>
-
     `;
 
 
     document.getElementById("totalPrice")
       .textContent="۰ تومان";
 
-
     return;
-
   }
 
 
   let total=0;
 
 
-  box.innerHTML=cart.map(
-    (item,index)=>{
+  box.innerHTML=
+    cart.map((item,index)=>{
 
-      const p=products.find(
-        x=>x.id===item.id
-      );
-
+      const p=
+        products.find(x=>x.id===item.id);
 
       if(!p)return"";
 
@@ -3609,7 +3545,6 @@ function renderCart(){
             loading="lazy"
           >
 
-
           <div class="cart-info">
 
             <div class="cart-name">
@@ -3623,7 +3558,6 @@ function renderCart(){
             <div class="cart-price">
               ${price(p.price)}
             </div>
-
 
             <div class="qty">
 
@@ -3645,7 +3579,6 @@ function renderCart(){
 
             </div>
 
-
             <button
               class="remove"
               onclick="removeCart(${index})"
@@ -3659,8 +3592,7 @@ function renderCart(){
 
       `;
 
-    }
-  ).join("");
+    }).join("");
 
 
   document.getElementById("totalPrice")
@@ -3754,7 +3686,6 @@ function checkout(){
     toast("سبد خرید خالی است.");
 
     return;
-
   }
 
 
@@ -3785,7 +3716,7 @@ function toggleTheme(){
 
 
 /* =========================================================
-   MOBILE MENU
+   MENU
 ========================================================= */
 
 function toggleMenu(){
@@ -3810,11 +3741,7 @@ function subscribe(e){
     document.getElementById("email");
 
 
-  if(!input.value)return;
-
-
   input.value="";
-
 
   toast(
     "عضویت شما با موفقیت انجام شد."
@@ -3827,7 +3754,7 @@ function subscribe(e){
    TOAST
 ========================================================= */
 
-let toastTimer=null;
+let toastTimer;
 
 
 function toast(message){
@@ -3838,24 +3765,22 @@ function toast(message){
 
   el.textContent=message;
 
-
   el.classList.add("show");
 
 
   clearTimeout(toastTimer);
 
 
-  toastTimer=setTimeout(()=>{
-
-    el.classList.remove("show");
-
-  },2600);
+  toastTimer=
+    setTimeout(()=>{
+      el.classList.remove("show");
+    },2600);
 
 }
 
 
 /* =========================================================
-   CLOSE EVERYTHING
+   CLOSE
 ========================================================= */
 
 function closeEverything(){
@@ -3864,16 +3789,13 @@ function closeEverything(){
     .getElementById("cart")
     .classList.remove("active");
 
-
   document
     .getElementById("modal")
     .classList.remove("active");
 
-
   document
     .getElementById("overlay")
     .classList.remove("active");
-
 
   document.body.classList.remove("no-scroll");
 
@@ -3886,8 +3808,8 @@ function closeEverything(){
 
 const saleEnd=
   Date.now()+
-  (2*24*60*60*1000)+
-  (12*60*60*1000);
+  2*24*60*60*1000+
+  12*60*60*1000;
 
 
 function countdown(){
@@ -3896,61 +3818,51 @@ function countdown(){
     saleEnd-Date.now();
 
 
-  if(distance<=0){
-
-    document.getElementById("days")
-      .textContent="00";
-
-    document.getElementById("hours")
-      .textContent="00";
-
-    document.getElementById("minutes")
-      .textContent="00";
-
-    document.getElementById("seconds")
-      .textContent="00";
-
-    return;
-
-  }
+  if(distance<=0)return;
 
 
-  const d=Math.floor(
-    distance/(1000*60*60*24)
-  );
+  const d=
+    Math.floor(
+      distance/(1000*60*60*24)
+    );
 
 
-  const h=Math.floor(
-    (distance%(1000*60*60*24))
-    /(1000*60*60)
-  );
+  const h=
+    Math.floor(
+      distance%(1000*60*60*24)/
+      (1000*60*60)
+    );
 
 
-  const m=Math.floor(
-    (distance%(1000*60*60))
-    /(1000*60)
-  );
+  const m=
+    Math.floor(
+      distance%(1000*60*60)/
+      (1000*60)
+    );
 
 
-  const s=Math.floor(
-    (distance%(1000*60))/1000
-  );
+  const s=
+    Math.floor(
+      distance%(1000*60)/
+      1000
+    );
 
 
   document.getElementById("days")
-    .textContent=String(d).padStart(2,"0");
-
+    .textContent=
+      String(d).padStart(2,"0");
 
   document.getElementById("hours")
-    .textContent=String(h).padStart(2,"0");
-
+    .textContent=
+      String(h).padStart(2,"0");
 
   document.getElementById("minutes")
-    .textContent=String(m).padStart(2,"0");
-
+    .textContent=
+      String(m).padStart(2,"0");
 
   document.getElementById("seconds")
-    .textContent=String(s).padStart(2,"0");
+    .textContent=
+      String(s).padStart(2,"0");
 
 }
 
@@ -3959,18 +3871,23 @@ setInterval(countdown,1000);
 
 
 /* =========================================================
-   LIGHTWEIGHT GSAP
+   GSAP ANIMATIONS
 ========================================================= */
 
 function initAnimations(){
 
-  if(!window.gsap)return;
+  if(
+    !window.gsap ||
+    !window.ScrollTrigger
+  ){
+    return;
+  }
 
 
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(
+    ScrollTrigger
+  );
 
-
-  /* HERO */
 
   const heroItems=
     gsap.utils.toArray(
@@ -4007,8 +3924,6 @@ function initAnimations(){
   );
 
 
-  /* SECTION HEADERS */
-
   gsap.utils
     .toArray(".section-head")
     .forEach(el=>{
@@ -4034,8 +3949,6 @@ function initAnimations(){
 
     });
 
-
-  /* CATEGORIES */
 
   gsap.utils
     .toArray(".category-card")
@@ -4063,8 +3976,6 @@ function initAnimations(){
 
     });
 
-
-  /* STORY */
 
   const storyItems=
     gsap.utils.toArray(
@@ -4097,7 +4008,7 @@ function initAnimations(){
 
     ScrollTrigger.refresh();
 
-  },250);
+  },300);
 
 }
 
@@ -4125,15 +4036,10 @@ window.addEventListener(
         document.getElementById("header");
 
 
-      if(window.scrollY>70){
-
-        header.classList.add("scrolled");
-
-      }else{
-
-        header.classList.remove("scrolled");
-
-      }
+      header.classList.toggle(
+        "scrolled",
+        window.scrollY>70
+      );
 
 
       headerTick=false;
@@ -4148,11 +4054,13 @@ window.addEventListener(
 
 
 /* =========================================================
-   OPTIMIZED CURSOR
+   CURSOR
 ========================================================= */
 
 if(
-  window.matchMedia("(pointer:fine)").matches
+  window.matchMedia(
+    "(pointer:fine)"
+  ).matches
 ){
 
   const dot=
@@ -4168,7 +4076,7 @@ if(
   let ringX=-100;
   let ringY=-100;
 
-  let cursorRunning=false;
+  let running=false;
 
 
   document.addEventListener(
@@ -4187,12 +4095,12 @@ if(
         )`;
 
 
-      if(!cursorRunning){
+      if(!running){
 
-        cursorRunning=true;
+        running=true;
 
         requestAnimationFrame(
-          updateCursor
+          cursorLoop
         );
 
       }
@@ -4204,7 +4112,7 @@ if(
   );
 
 
-  function updateCursor(){
+  function cursorLoop(){
 
     ringX+=
       (mouseX-ringX)*.18;
@@ -4227,12 +4135,12 @@ if(
     ){
 
       requestAnimationFrame(
-        updateCursor
+        cursorLoop
       );
 
     }else{
 
-      cursorRunning=false;
+      running=false;
 
     }
 
@@ -4243,15 +4151,11 @@ if(
     "mouseover",
     e=>{
 
-      const interactive=
-        e.target.closest(
-          "button,a,.category-card,.product-image"
-        );
-
-
       ring.classList.toggle(
         "big",
-        !!interactive
+        !!e.target.closest(
+          "button,a,.category-card,.product-image"
+        )
       );
 
     }
@@ -4261,14 +4165,16 @@ if(
 
 
 /* =========================================================
-   MAGNETIC BUTTONS
+   MAGNETIC
 ========================================================= */
 
 if(
-  window.matchMedia("(pointer:fine)").matches
+  window.matchMedia(
+    "(pointer:fine)"
+  ).matches
 ){
 
-  const magneticElements=
+  const magnetic=
     document.querySelectorAll(
       ".magnetic"
     );
@@ -4278,20 +4184,20 @@ if(
     "mousemove",
     e=>{
 
-      magneticElements.forEach(el=>{
+      magnetic.forEach(el=>{
 
-        const rect=
+        const r=
           el.getBoundingClientRect();
 
 
         const x=
           e.clientX-
-          (rect.left+rect.width/2);
+          (r.left+r.width/2);
 
 
         const y=
           e.clientY-
-          (rect.top+rect.height/2);
+          (r.top+r.height/2);
 
 
         const distance=
@@ -4302,8 +4208,8 @@ if(
 
           el.style.transform=
             `translate3d(
-              ${x*.10}px,
-              ${y*.10}px,
+              ${x*.1}px,
+              ${y*.1}px,
               0
             )`;
 
@@ -4318,15 +4224,13 @@ if(
   );
 
 
-  magneticElements.forEach(el=>{
+  magnetic.forEach(el=>{
 
     el.addEventListener(
       "mouseleave",
       ()=>{
-
         el.style.transform=
           "translate3d(0,0,0)";
-
       }
     );
 
@@ -4336,11 +4240,13 @@ if(
 
 
 /* =========================================================
-   3D CATEGORY TILT
+   TILT
 ========================================================= */
 
 if(
-  window.matchMedia("(pointer:fine)").matches
+  window.matchMedia(
+    "(pointer:fine)"
+  ).matches
 ){
 
   document
@@ -4356,13 +4262,15 @@ if(
 
 
           const x=
-            (e.clientX-r.left)/
-            r.width-.5;
+            e.clientX/r.width-
+            r.left/r.width-
+            .5;
 
 
           const y=
-            (e.clientY-r.top)/
-            r.height-.5;
+            e.clientY/r.height-
+            r.top/r.height-
+            .5;
 
 
           card.style.transform=
@@ -4381,9 +4289,7 @@ if(
       card.addEventListener(
         "mouseleave",
         ()=>{
-
           card.style.transform="";
-
         }
       );
 
@@ -4393,7 +4299,7 @@ if(
 
 
 /* =========================================================
-   MOBILE LINKS
+   MOBILE NAV
 ========================================================= */
 
 document
@@ -4403,11 +4309,9 @@ document
     a.addEventListener(
       "click",
       ()=>{
-
         document
           .getElementById("navLinks")
           .classList.remove("active");
-
       }
     );
 
@@ -4415,7 +4319,7 @@ document
 
 
 /* =========================================================
-   ESC KEY
+   ESC
 ========================================================= */
 
 document.addEventListener(
@@ -4437,11 +4341,13 @@ document.addEventListener(
 
 
 /* =========================================================
-   THEME INITIALIZE
+   THEME INIT
 ========================================================= */
 
 if(
-  localStorage.getItem("negar_theme")==="dark"
+  localStorage.getItem(
+    "negar_theme"
+  )==="dark"
 ){
 
   document.body.classList.add("dark");
@@ -4450,7 +4356,7 @@ if(
 
 
 /* =========================================================
-   INITIALIZE
+   INIT
 ========================================================= */
 
 renderProducts();
@@ -4461,80 +4367,6 @@ updateCounts();
 
 countdown();
 
-
-/* =========================================================
-   SAFE PRELOADER
-========================================================= */
-
-let preloaderHidden=false;
-
-
-function hidePreloader(){
-
-  if(preloaderHidden)return;
-
-  preloaderHidden=true;
-
-
-  const preloader=
-    document.getElementById("preloader");
-
-
-  if(!preloader)return;
-
-
-  preloader.classList.add("done");
-
-
-  setTimeout(()=>{
-
-    if(preloader.parentNode){
-
-      preloader.remove();
-
-    }
-
-  },700);
-
-}
-
-
-/*
-  دیگر منتظر تمام عکس‌های سایت نمی‌مانیم.
-  صفحه حداکثر حدود 700ms در Preloader می‌ماند.
-*/
-
-window.addEventListener(
-  "DOMContentLoaded",
-  ()=>{
-
-    setTimeout(
-      hidePreloader,
-      700
-    );
-
-  },
-  {
-    once:true
-  }
-);
-
-
-/*
-  Fail-safe:
-  حتی اگر CDN یا یک منبع خارجی مشکل داشت،
-  صفحه هیچ‌وقت در Preloader گیر نمی‌کند.
-*/
-
-setTimeout(
-  hidePreloader,
-  1800
-);
-
-
-/* =========================================================
-   START ANIMATIONS AFTER DOM
-========================================================= */
 
 if(
   document.readyState==="loading"
